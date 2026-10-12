@@ -1,0 +1,168 @@
+﻿<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Веб и чат-боты — Ярослав Ковалец</title>
+<style>
+  :root{--green:#2e9e6b; --bg:#f4f6f8; --card:#fff; --ink:#1f2328; --muted:#6b7280; --line:#e6e9ec}
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:system-ui,-apple-system,sans-serif;background:var(--bg);color:var(--ink);line-height:1.6}
+  .wrap{max-width:900px;margin:0 auto;padding:40px 20px}
+  header{margin-bottom:40px;text-align:center}
+  h1{font-size:clamp(28px,5vw,42px);font-weight:800;margin-bottom:10px}
+  p.sub{color:var(--muted);font-size:17px;max-width:600px;margin:0 auto}
+  a.back{display:inline-block;margin-top:20px;color:var(--green);text-decoration:none;font-weight:700}
+
+  .hero-banner{position:relative;width:100%;height:300px;border-radius:20px;overflow:hidden;margin-bottom:50px;display:flex;align-items:center;justify-content:center;color:#fff}
+  .hero-banner img{position:absolute;top:0;left:0;width:100%;height:100%;object-fit:cover;z-index:1;filter:brightness(0.65)}
+  .hero-banner h2{position:relative;z-index:2;font-size:clamp(24px,4vw,36px);text-align:center;padding:20px;text-shadow:0 2px 10px rgba(0,0,0,.8)}
+
+  section{margin-bottom:60px}
+  section h2{font-size:24px;margin-bottom:20px;color:var(--green);border-bottom:2px solid var(--green);display:inline-block;padding-bottom:6px}
+  section p.lead{color:var(--muted);margin-bottom:30px;font-size:16px}
+
+  .cases{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:20px}
+  .case{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:24px;display:flex;flex-direction:column}
+  .case .tag{display:inline-block;font-size:12px;font-weight:700;color:var(--green);background:rgba(46,158,107,.1);padding:3px 12px;border-radius:20px;margin-bottom:12px;align-self:flex-start}
+  .case h3{font-size:18px;margin-bottom:8px}
+  .case p{font-size:14px;color:var(--muted);margin-bottom:16px}
+  .btn{display:inline-block;background:var(--green);color:#fff;padding:10px 18px;border-radius:10px;text-decoration:none;font-weight:700;font-size:14px;margin-top:auto;align-self:flex-start}
+  .btn:hover{filter:brightness(1.1)}
+  .btn.disabled{background:#c9d1d9;cursor:not-allowed;pointer-events:none}
+
+  .services{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:16px}
+  .service{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:18px}
+  .service h3{font-size:16px;margin-bottom:8px;color:var(--green)}
+  .service p{font-size:13.5px;color:var(--muted)}
+
+  .bot-hint{background:var(--card);border-left:4px solid var(--green);padding:14px 18px;border-radius:8px;color:var(--muted);font-size:14px;margin-top:24px}
+
+  footer{margin-top:50px;text-align:center;font-size:13px;background:var(--ink);color:#fff;padding:30px 20px;border-radius:16px}
+  footer b{color:#fff}
+
+  /* ДЕМО-БОТ */
+  .bot-btn{position:fixed;right:20px;bottom:20px;background:var(--green);color:#fff;border:none;border-radius:30px;padding:14px 20px;font-size:15px;font-weight:700;cursor:pointer;box-shadow:0 8px 20px rgba(0,0,0,.25);z-index:50}
+  .bot-panel{position:fixed;right:20px;bottom:80px;width:320px;max-width:calc(100vw - 40px);background:#fff;border:1px solid var(--line);border-radius:16px;box-shadow:0 12px 30px rgba(0,0,0,.18);display:none;flex-direction:column;overflow:hidden;z-index:50}
+  .bot-panel.open{display:flex}
+  .bot-head{background:var(--green);color:#fff;padding:12px 16px;font-weight:700;font-size:14px}
+  .bot-msgs{padding:14px;height:260px;overflow-y:auto;display:flex;flex-direction:column;gap:8px;font-size:13.5px}
+  .msg{max-width:85%;padding:8px 12px;border-radius:12px;line-height:1.45}
+  .msg.bot{background:#eef2f0;align-self:flex-start}
+  .msg.user{background:var(--green);color:#fff;align-self:flex-end}
+  .bot-input{display:flex;border-top:1px solid var(--line)}
+  .bot-input input{flex:1;border:none;padding:12px;font-size:14px;outline:none;font-family:inherit}
+  .bot-input button{border:none;background:var(--green);color:#fff;padding:0 16px;font-weight:700;cursor:pointer}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <h1>Веб и чат-боты</h1>
+    <p class="sub">Лендинги на Tilda и свои решения, логика ботов, автоматизация заявок.</p>
+    <a href="index.html">← На главную</a>
+  </header>
+
+  <div class="hero-banner">
+    <img src="yaroslav-cyborg.jpg" alt="Человек + AI">
+    <h2>Человек + AI</h2>
+  </div>
+
+  <!-- ЛЕНДИНГИ -->
+  <section>
+    <h2>Лендинги</h2>
+    <p class="lead">Посадочные страницы под рекламу и задачи бизнеса: структура, тексты, сбор заявок.</p>
+    <div class="cases">
+      <div class="case">
+        <span class="tag">Лендинг · Образование</span>
+        <h3>edustart — лендинг онлайн-школы</h3>
+        <p>Живой сайт: структура, оффер, формы заявок. Можно открыть и потрогать.</p>
+        <a class="btn" href="https://kanzas77.github.io/edustart/" target="_blank">Смотреть живой сайт</a>
+      </div>
+      <div class="case">
+        <span class="tag">Лендинг · Детские товары</span>
+        <h3>Полимерия — сайт бренда</h3>
+        <p>Готовый работающий сайт для бренда детских товаров. Ссылка появится после согласования с клиентом.</p>
+        <a class="btn disabled" href="#">Ссылка скоро будет</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ЧАТ-БОТЫ -->
+  <section>
+    <h2>Чат-боты и автоматизация</h2>
+    <p class="lead">Бот забирает рутину: отвечает на вопросы, принимает заявки и передаёт их вам готовыми.</p>
+    <div class="services">
+      <div class="service"><h3>Сценарии ботов</h3><p>Ответы на частые вопросы, прогрев и ведение клиента до заявки без участия менеджера.</p></div>
+      <div class="service"><h3>Приём и маршрутизация заявок</h3><p>Бот + таблица + уведомления: ни одна заявка не теряется, все данные в одном месте.</p></div>
+      <div class="service"><h3>Боты VK и Telegram</h3><p>Простые боты для малого бизнеса: от консультации до записи и оплаты.</p></div>
+      <div class="service"><h3>Связка «лендинг + бот»</h3><p>Посетитель приходит с рекламы → бот снимает контакты → вы получаете готовую заявку.</p></div>
+    </div>
+    <div class="bot-hint">💬 Попробуйте демо-бота в правом нижнем углу: он отвечает на вопросы о цене, сроках, кейсах и контактах — так же, как будет работать бот вашего бизнеса.</div>
+  </section>
+
+  <footer>
+    <b>Нужен лендинг или бот под вашу задачу?</b><br>
+    maxkan77@yandex.ru · +7 915 573 83 82 (MAX / звонок)<br>
+    © 2026 Ярослав · Веб и чат-боты
+  </footer>
+</div>
+
+<!-- ДЕМО-БОТ -->
+<button class="bot-btn" id="botBtn">💬 Демо-бот</button>
+<div class="bot-panel" id="botPanel">
+  <div class="bot-head">Бот Ярослава (демо)</div>
+  <div class="bot-msgs" id="botMsgs"></div>
+  <div class="bot-input">
+    <input type="text" id="botText" placeholder="Напишите вопрос…">
+    <button id="botSend">→</button>
+  </div>
+</div>
+
+<script>
+  const panel = document.getElementById('botPanel');
+  const msgs = document.getElementById('botMsgs');
+  const input = document.getElementById('botText');
+  let greeted = false;
+
+  document.getElementById('botBtn').onclick = () => {
+    panel.classList.toggle('open');
+    if (!greeted) {
+      addMsg('Привет! Я демо-бот Ярослава. Спросите про цену, сроки, кейсы или контакты.', 'bot');
+      greeted = true;
+    }
+  };
+
+  function addMsg(text, cls) {
+    const d = document.createElement('div');
+    d.className = 'msg ' + cls;
+    d.textContent = text;
+    msgs.appendChild(d);
+    msgs.scrollTop = msgs.scrollHeight;
+  }
+
+  function botReply(t) {
+    t = t.toLowerCase();
+    if (t.includes('цен') || t.includes('стои') || t.includes('сколько')) return 'Цена зависит от задачи: лендинг, бот или связка. Напишите Ярославу в MAX — оценит задачу бесплатно и пришлёт вилку цены.';
+    if (t.includes('срок') || t.includes('долго') || t.includes('когда')) return 'Сроки зависят от объёма: простой лендинг или простой бот — около недели. Точные сроки — после короткого брифа.';
+    if (t.includes('контакт') || t.includes('телефон') || t.includes('почта') || t.includes('написа')) return 'Контакты: maxkan77@yandex.ru · +7 915 573 83 82 (MAX / звонок).';
+    if (t.includes('кейс') || t.includes('пример') || t.includes('портфо')) return 'Живой пример лендинга — кнопка «Смотреть живой сайт» в блоке выше. Видео и тексты — в разделах портфолио на главной.';
+    if (t.includes('бот')) return 'Я делаю ботов VK и Telegram: приём заявок, ответы на вопросы, маршрутизация к менеджеру. Спросите «цена» или «сроки».';
+    if (t.includes('лендинг') || t.includes('сайт')) return 'Лендинги — на Tilda и свои решения. Живой пример — edustart, кнопка в блоке «Лендинги» выше.';
+    if (t.includes('привет') || t.includes('здрав')) return 'Здравствуйте! Чем помочь? Могу рассказать про цену, сроки, кейсы или дать контакты.';
+    return 'Я понимаю вопросы про цену, сроки, ботов, лендинги, кейсы и контакты. Попробуйте написать, например, «цена» 🙂';
+  }
+
+  function send() {
+    const t = input.value.trim();
+    if (!t) return;
+    addMsg(t, 'user');
+    input.value = '';
+    setTimeout(() => addMsg(botReply(t), 'bot'), 400);
+  }
+
+  document.getElementById('botSend').onclick = send;
+  input.addEventListener('keydown', e => { if (e.key === 'Enter') send(); });
+</script>
+</body>
+</html>
