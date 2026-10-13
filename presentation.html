@@ -1,0 +1,132 @@
+﻿<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Презентации — Ярослав Ковалец</title>
+<style>
+  :root{--green:#2e9e6b; --bg:#f4f6f8; --card:#fff; --ink:#1f2328; --muted:#6b7280; --line:#e6e9ec}
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:system-ui,-apple-system,sans-serif;background:var(--bg);color:var(--ink);line-height:1.6}
+  .wrap{max-width:900px;margin:0 auto;padding:40px 20px}
+  header{margin-bottom:40px;text-align:center}
+  h1{font-size:clamp(28px,5vw,42px);font-weight:800;margin-bottom:10px}
+  p.sub{color:var(--muted);font-size:17px;max-width:600px;margin:0 auto}
+  a.back{display:inline-block;margin-top:20px;color:var(--green);text-decoration:none;font-weight:700}
+
+  .case-meta{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:24px;margin-bottom:30px}
+  .case-meta .tag{display:inline-block;font-size:12px;font-weight:700;color:var(--green);background:rgba(46,158,107,.1);padding:3px 12px;border-radius:20px;margin-bottom:12px}
+  .case-meta h2{font-size:22px;margin-bottom:12px}
+  .case-meta p{font-size:14px;color:var(--muted);margin-bottom:6px}
+  .case-meta p b{color:var(--ink)}
+
+  /* ПРОСМОТРЩИК ПРЕЗЕНТАЦИИ */
+  .viewer{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:20px;margin-bottom:40px}
+  .slide{display:none}
+  .slide.active{display:block}
+  .slide img.full{width:100%;aspect-ratio:16/9;object-fit:contain;background:#fff;border-radius:10px;border:1px solid var(--line)}
+  
+  /* Финальный слайд (HTML) */
+  .slide-final{display:none;gap:24px;align-items:center;background:#fff;border-radius:10px;border:1px solid var(--line);padding:24px;aspect-ratio:16/9}
+  .slide-final.active{display:flex}
+  @media(max-width:640px){.slide-final{aspect-ratio:auto;flex-direction:column}}
+  .slide-final img{width:34%;min-width:160px;aspect-ratio:3/4;object-fit:cover;border-radius:12px;border:3px solid var(--green)}
+  .slide-final h3{font-size:clamp(18px,3vw,26px);margin-bottom:12px}
+  .slide-final p{font-size:14px;color:var(--muted);margin-bottom:12px}
+  .slide-final .contacts{font-size:14px;font-weight:700;color:var(--ink);background:#f0faf5;border-left:3px solid var(--green);padding:10px 14px;border-radius:6px}
+
+  /* Навигация */
+  .nav{display:flex;align-items:center;justify-content:center;gap:20px;margin-top:18px}
+  .nav button{width:44px;height:44px;border-radius:50%;border:1px solid var(--line);background:#fff;font-size:22px;cursor:pointer;color:var(--green);font-weight:700}
+  .nav button:hover{border-color:var(--green)}
+  #counter{font-size:14px;color:var(--muted);font-weight:700;min-width:100px;text-align:center}
+  .dots{display:flex;justify-content:center;gap:8px;margin-top:14px;flex-wrap:wrap}
+  .dot{width:10px;height:10px;border-radius:50%;background:#d5dbe0;cursor:pointer;border:none;padding:0}
+  .dot.active{background:var(--green)}
+
+  footer{margin-top:50px;text-align:center;font-size:13px;background:var(--ink);color:#fff;padding:30px 20px;border-radius:16px}
+  footer b{color:#fff}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <h1>Презентации</h1>
+    <p class="sub">Интерактивные HTML-презентации для УК и девелоперов. Инженерный подход без библиотек.</p>
+    <a href="index.html">← На главную</a>
+  </header>
+
+  <div class="case-meta">
+    <span class="tag">Презентация для управляющей компании</span>
+    <h2>Комплексное кондиционирование ЖК «Северный парк»</h2>
+    <p><b>Клиент:</b> управляющая компания ЖК «Северный парк».</p>
+    <p><b>Объём:</b> 10 слайдов: проблема → решение → техника → сервис → результат.</p>
+    <p><b>Сделано:</b> структура, тексты слайдов, визуальное оформление и JS-навигация без библиотек.</p>
+  </div>
+
+  <div class="viewer">
+    <div class="slide active"><img class="full" src="pres-slide-1.jpg" alt="Слайд 1 — Комплексное кондиционирование ЖК «Северный парк»"></div>
+    <div class="slide"><img class="full" src="pres-slide-2.jpg" alt="Слайд 2 — Хаотичная установка — беда фасада и УК"></div>
+    <div class="slide"><img class="full" src="pres-slide-3.jpg" alt="Слайд 3 — Единый проект на этапе строительства"></div>
+    <div class="slide"><img class="full" src="pres-slide-4.jpg" alt="Слайд 4 — Техническая корзина в цвет фасада"></div>
+    <div class="slide"><img class="full" src="pres-slide-5.jpg" alt="Слайд 5 — На стене жилой комнаты, возле окна"></div>
+    <div class="slide"><img class="full" src="pres-slide-6.jpg" alt="Слайд 6 — Пульт, как телевизор"></div>
+    <div class="slide"><img class="full" src="pres-slide-7.jpg" alt="Слайд 7 — Как идёт трасса от блока к блоку"></div>
+    <div class="slide"><img class="full" src="pres-slide-8.jpg" alt="Слайд 8 — Одна точка ответственности"></div>
+    <div class="slide"><img class="full" src="pres-slide-9.jpg" alt="Слайд 9 — Целый фасад и спокойная УК"></div>
+
+    <!-- Слайд 10: живой HTML-слайд с фото и контактами -->
+    <div class="slide slide-final">
+      <img src="yaroslav-hero.jpg" alt="Ярослав Ковалец">
+      <div>
+        <h3>Обсудим внедрение для вашего объекта?</h3>
+        <p>Презентация подготовлена Ярославом: структура, тексты слайдов, визуальное оформление и JS-навигация без библиотек. Нужна такая же упаковка инженерного решения для вашего ЖК или УК — напишите.</p>
+        <div class="contacts">maxkan77@yandex.ru · +7 915 573 83 82 (MAX / звонок)</div>
+      </div>
+    </div>
+
+    <div class="nav">
+      <button id="prev" aria-label="Предыдущий слайд">‹</button>
+      <span id="counter">Слайд 1 / 10</span>
+      <button id="next" aria-label="Следующий слайд">›</button>
+    </div>
+    <div class="dots" id="dots"></div>
+  </div>
+
+  <footer>
+    <b>Нужна такая же упаковка инженерного решения для вашего ЖК или УК?</b><br>
+    maxkan77@yandex.ru · +7 915 573 83 82 (MAX / звонок)<br>
+    © 2026 Ярослав · Презентации
+  </footer>
+</div>
+
+<script>
+  const slides = document.querySelectorAll('.slide');
+  const dotsBox = document.getElementById('dots');
+  const counter = document.getElementById('counter');
+  let cur = 0;
+
+  slides.forEach((s, i) => {
+    const d = document.createElement('button');
+    d.className = 'dot' + (i === 0 ? ' active' : '');
+    d.onclick = () => show(i);
+    dotsBox.appendChild(d);
+  });
+  const dots = dotsBox.querySelectorAll('.dot');
+
+  function show(n) {
+    cur = (n + slides.length) % slides.length;
+    slides.forEach((s, i) => s.classList.toggle('active', i === cur));
+    dots.forEach((d, i) => d.classList.toggle('active', i === cur));
+    counter.textContent = 'Слайд ' + (cur + 1) + ' / ' + slides.length;
+  }
+
+  document.getElementById('prev').onclick = () => show(cur - 1);
+  document.getElementById('next').onclick = () => show(cur + 1);
+  document.addEventListener('keydown', e => {
+    if (e.key === 'ArrowLeft') show(cur - 1);
+    if (e.key === 'ArrowRight') show(cur + 1);
+  });
+</script>
+</body>
+</html>
