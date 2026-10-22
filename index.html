@@ -1,4 +1,4 @@
-﻿<!-- version v2 22.10 -->
+﻿<!-- version v3 22.10 -->
 <!DOCTYPE html>
 <html lang="ru">
 <head>
@@ -32,9 +32,17 @@
             text-align: center;
             background: url('bg-hero.jpg?v=2') center/cover no-repeat;
         }
-        .hero h1 { font-size: 40px; margin-bottom: 20px; color: #0f172a; }
-        .hero h1 span { color: #ea580c; }
-        .hero p { font-size: 18px; color: #1e293b; margin-bottom: 30px; max-width: 700px; margin-left: auto; margin-right: auto; }
+        /* Тёмная полупрозрачная плашка только под текстом */
+        .hero-box { 
+            background: rgba(15, 23, 42, 0.55); 
+            border-radius: 16px; 
+            padding: 40px; 
+            max-width: 800px; 
+            margin: 0 auto; 
+        }
+        .hero h1 { font-size: 40px; margin-bottom: 20px; color: #ffffff; }
+        .hero h1 span { color: #f97316; }
+        .hero p { font-size: 18px; color: #e2e8f0; margin-bottom: 30px; max-width: 700px; margin-left: auto; margin-right: auto; }
         .btn { 
             background: #f97316; 
             color: white; 
@@ -106,6 +114,11 @@
         footer p { margin: 10px 0; color: #cbd5e1; }
         footer a { color: #f97316; text-decoration: none; }
         footer a:hover { text-decoration: underline; }
+        
+        @media (max-width: 768px) {
+            .hero-box { padding: 25px; }
+            .hero h1 { font-size: 26px; }
+        }
     </style>
 </head>
 <body>
@@ -125,7 +138,7 @@
     </header>
 
     <section class="hero">
-        <div>
+        <div class="hero-box">
             <h1>Превращаю хаос идей в <span>продающие смыслы</span></h1>
             <p>Копирайтер, сценарист и SMM-специалист. Создаю тексты и визуальные концепции, которые удерживают внимание и ведут к действию.</p>
             <a href="#contacts" class="btn">Обсудить проект</a>
