@@ -29,7 +29,6 @@
   .case p{font-size:14px;color:var(--muted);margin-bottom:16px}
   .btn{display:inline-block;background:var(--green);color:#fff;padding:10px 18px;border-radius:10px;text-decoration:none;font-weight:700;font-size:14px;margin-top:auto;align-self:flex-start}
   .btn:hover{filter:brightness(1.1)}
-  .btn.disabled{background:#c9d1d9;cursor:not-allowed;pointer-events:none}
 
   .services{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:16px}
   .service{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:18px}
@@ -82,8 +81,8 @@
       <div class="case">
         <span class="tag">Лендинг · Детские товары</span>
         <h3>Полимерия — сайт бренда</h3>
-        <p>Готовый работающий сайт для бренда детских товаров. Ссылка появится после согласования с клиентом.</p>
-        <a class="btn disabled" href="#">Ссылка скоро будет</a>
+        <p>Готовый работающий сайт для бренда детских товаров.</p>
+        <a class="btn" href="https://mk-polymeriya.tilda.ws" target="_blank">Смотреть живой сайт</a>
       </div>
     </div>
   </section>
@@ -146,9 +145,9 @@
     if (t.includes('цен') || t.includes('стои') || t.includes('сколько')) return 'Цена зависит от задачи: лендинг, бот или связка. Напишите Ярославу в MAX — оценит задачу бесплатно и пришлёт вилку цены.';
     if (t.includes('срок') || t.includes('долго') || t.includes('когда')) return 'Сроки зависят от объёма: простой лендинг или простой бот — около недели. Точные сроки — после короткого брифа.';
     if (t.includes('контакт') || t.includes('телефон') || t.includes('почта') || t.includes('написа')) return 'Контакты: maxkan77@yandex.ru · +7 915 573 83 82 (MAX / звонок).';
-    if (t.includes('кейс') || t.includes('пример') || t.includes('портфо')) return 'Живой пример лендинга — кнопка «Смотреть живой сайт» в блоке выше. Видео и тексты — в разделах портфолио на главной.';
+    if (t.includes('кейс') || t.includes('пример') || t.includes('портфо')) return 'Живые примеры лендингов — кнопки «Смотреть живой сайт» в блоке «Лендинги» выше. Видео и тексты — в разделах портфолио на главной.';
     if (t.includes('бот')) return 'Я делаю ботов VK и Telegram: приём заявок, ответы на вопросы, маршрутизация к менеджеру. Спросите «цена» или «сроки».';
-    if (t.includes('лендинг') || t.includes('сайт')) return 'Лендинги — на Tilda и свои решения. Живой пример — edustart, кнопка в блоке «Лендинги» выше.';
+    if (t.includes('лендинг') || t.includes('сайт')) return 'Лендинги — на Tilda и свои решения. Живые примеры — edustart и Полимерия, кнопки в блоке «Лендинги» выше.';
     if (t.includes('привет') || t.includes('здрав')) return 'Здравствуйте! Чем помочь? Могу рассказать про цену, сроки, кейсы или дать контакты.';
     return 'Я понимаю вопросы про цену, сроки, ботов, лендинги, кейсы и контакты. Попробуйте написать, например, «цена» 🙂';
   }
