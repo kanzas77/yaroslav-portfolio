@@ -1,0 +1,632 @@
+﻿<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Веб и чат-боты — Ярослав Ковалец</title>
+<style>
+* { margin:0; padding:0; box-sizing:border-box; }
+html { scroll-behavior:smooth; }
+body {
+  font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;
+  color:#EAF7EE;
+  background:linear-gradient(180deg, #05261B 0%, #14532D 40%, #3E8E5A 100%);
+  min-height:100vh;
+  padding-bottom:80px;
+}
+
+/* Шапка с фото */
+.hero {
+  position:relative;
+  height:280px;
+  background-image:url('header-web.jpg');
+  background-size:cover;
+  background-position:center;
+  display:flex;
+  align-items:flex-end;
+  justify-content:center;
+  padding:30px 20px;
+}
+.hero::after {
+  content:'';
+  position:absolute;
+  inset:0;
+  background:linear-gradient(180deg, rgba(5,38,27,0.3) 0%, rgba(5,38,27,0.85) 100%);
+}
+.hero-content {
+  position:relative;
+  z-index:2;
+  text-align:center;
+  max-width:900px;
+}
+.hero h1 {
+  font-size:42px;
+  margin-bottom:10px;
+  color:#F5E9D0;
+}
+.hero p {
+  font-size:18px;
+  color:#DFF3E4;
+  opacity:0.95;
+}
+
+/* Верхнее меню */
+.topbar {
+  position:sticky;
+  top:0;
+  z-index:50;
+  background:rgba(5,38,27,0.95);
+  backdrop-filter:blur(8px);
+  padding:12px 20px;
+  display:flex;
+  gap:10px;
+  flex-wrap:wrap;
+  justify-content:center;
+  box-shadow:0 4px 20px rgba(0,0,0,0.25);
+}
+.topbar a {
+  color:#EAF7EE;
+  text-decoration:none;
+  font-weight:600;
+  font-size:14px;
+  padding:10px 18px;
+  border-radius:10px;
+  transition:all .2s;
+}
+.topbar a:hover { transform:translateY(-2px); box-shadow:0 6px 16px rgba(0,0,0,.3); }
+.topbar .home { background:rgba(255,255,255,.1); }
+.topbar .nav-sites { background:#14532D; }
+.topbar .nav-planner { background:#3E8E5A; }
+.topbar .nav-bots { background:#2F7D4F; }
+.topbar .nav-demo { background:#58B368; }
+
+.wrap { max-width:1100px; margin:0 auto; padding:0 20px; }
+
+section {
+  margin:50px 0;
+  scroll-margin-top:90px;
+}
+.section-title {
+  font-size:30px;
+  color:#86EFAC;
+  margin-bottom:8px;
+}
+.section-sub {
+  color:#DFF3E4;
+  margin-bottom:30px;
+  font-size:16px;
+}
+
+/* Карточки */
+.card {
+  background:#0E3A2A;
+  border:1px solid #86EFAC40;
+  border-radius:16px;
+  padding:24px;
+  margin-bottom:20px;
+  box-shadow:0 8px 24px rgba(0,0,0,0.2);
+}
+.card h3 {
+  color:#86EFAC;
+  font-size:22px;
+  margin-bottom:12px;
+}
+.card p {
+  color:#DFF3E4;
+  line-height:1.6;
+  margin-bottom:16px;
+}
+.card .tag {
+  display:inline-block;
+  background:#86EFAC20;
+  color:#86EFAC;
+  padding:4px 12px;
+  border-radius:20px;
+  font-size:12px;
+  margin-right:6px;
+  margin-bottom:6px;
+  border:1px solid #86EFAC40;
+}
+.btn {
+  display:inline-block;
+  padding:12px 24px;
+  border-radius:10px;
+  text-decoration:none;
+  font-weight:600;
+  font-size:14px;
+  transition:all .2s;
+  margin-right:10px;
+  margin-top:8px;
+}
+.btn-primary {
+  background:linear-gradient(135deg,#2F7D4F,#58B368);
+  color:#fff;
+}
+.btn-primary:hover { transform:translateY(-2px); box-shadow:0 8px 20px rgba(88,179,104,.4); }
+.btn-ghost {
+  background:transparent;
+  color:#86EFAC;
+  border:1px solid #86EFAC;
+}
+.btn-ghost:hover { background:#86EFAC20; }
+
+/* Сетка лендингов */
+.grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(300px,1fr)); gap:20px; }
+
+/* Цены */
+.price-tag {
+  display:inline-block;
+  background:linear-gradient(135deg,#2F7D4F,#58B368);
+  color:#fff;
+  padding:8px 16px;
+  border-radius:8px;
+  font-weight:bold;
+  font-size:18px;
+  margin:10px 0;
+}
+
+/* Тестовый ключ */
+.keybox {
+  background:rgba(134,239,172,0.1);
+  border:1px dashed #86EFAC;
+  border-radius:12px;
+  padding:20px;
+  text-align:center;
+  margin:16px 0;
+}
+.keybox code {
+  display:inline-block;
+  background:#05261B;
+  color:#86EFAC;
+  padding:10px 20px;
+  border-radius:8px;
+  font-size:18px;
+  font-weight:bold;
+  letter-spacing:1px;
+  margin-top:10px;
+  font-family:'Courier New',monospace;
+}
+
+/* localStorage info */
+.info-block {
+  background:rgba(5,38,27,0.5);
+  border-left:4px solid #86EFAC;
+  padding:16px 20px;
+  border-radius:8px;
+  margin:16px 0;
+  font-size:14px;
+  line-height:1.6;
+}
+.info-block code {
+  background:rgba(0,0,0,0.4);
+  padding:2px 6px;
+  border-radius:4px;
+  font-size:12px;
+}
+
+/* Кнопки мессенджеров */
+.msg-btns { display:flex; gap:10px; flex-wrap:wrap; margin-top:12px; }
+.msg-btn {
+  flex:1;
+  min-width:160px;
+  padding:12px;
+  border-radius:10px;
+  text-decoration:none;
+  font-weight:bold;
+  text-align:center;
+  color:#fff;
+  transition:transform .2s;
+}
+.msg-btn:hover { transform:translateY(-2px); }
+.msg-btn.vk { background:#0077FF; }
+.msg-btn.max { background:#8B5CF6; }
+.msg-btn.tg { background:#229ED9; }
+
+/* Демо-бот виджет */
+.demo-widget {
+  position:fixed;
+  bottom:20px;
+  right:20px;
+  z-index:1000;
+}
+.demo-toggle {
+  width:60px;
+  height:60px;
+  border-radius:50%;
+  background:linear-gradient(135deg,#2F7D4F,#58B368);
+  border:none;
+  color:#fff;
+  font-size:28px;
+  cursor:pointer;
+  box-shadow:0 6px 20px rgba(88,179,104,.5);
+  transition:transform .2s;
+}
+.demo-toggle:hover { transform:scale(1.1); }
+.demo-chat {
+  position:absolute;
+  bottom:75px;
+  right:0;
+  width:320px;
+  max-height:450px;
+  background:#0E3A2A;
+  border:1px solid #86EFAC;
+  border-radius:16px;
+  display:none;
+  flex-direction:column;
+  overflow:hidden;
+  box-shadow:0 10px 40px rgba(0,0,0,0.4);
+}
+.demo-chat.open { display:flex; }
+.demo-header {
+  background:#14532D;
+  padding:14px;
+  display:flex;
+  align-items:center;
+  gap:10px;
+  border-bottom:1px solid #86EFAC40;
+}
+.demo-avatar {
+  width:36px;
+  height:36px;
+  border-radius:50%;
+  background:linear-gradient(135deg,#2F7D4F,#58B368);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:18px;
+}
+.demo-header-text { color:#86EFAC; font-weight:bold; font-size:14px; }
+.demo-header-sub { color:#DFF3E4; font-size:11px; opacity:0.8; }
+.demo-messages {
+  flex:1;
+  padding:14px;
+  overflow-y:auto;
+  max-height:280px;
+  background:#05261B;
+}
+.demo-msg {
+  margin-bottom:10px;
+  padding:10px 12px;
+  border-radius:12px;
+  font-size:13px;
+  line-height:1.4;
+  max-width:85%;
+}
+.demo-msg.bot {
+  background:#14532D;
+  color:#EAF7EE;
+  border-bottom-left-radius:4px;
+}
+.demo-msg.user {
+  background:#86EFAC;
+  color:#05261B;
+  margin-left:auto;
+  border-bottom-right-radius:4px;
+  font-weight:500;
+}
+.demo-options {
+  padding:10px;
+  display:flex;
+  flex-wrap:wrap;
+  gap:6px;
+  background:#0E3A2A;
+  border-top:1px solid #86EFAC40;
+}
+.demo-opt {
+  background:#86EFAC20;
+  border:1px solid #86EFAC;
+  color:#86EFAC;
+  padding:6px 12px;
+  border-radius:16px;
+  font-size:12px;
+  cursor:pointer;
+  transition:all .2s;
+}
+.demo-opt:hover { background:#86EFAC; color:#05261B; }
+
+/* Footer */
+footer {
+  text-align:center;
+  padding:40px 20px 20px;
+  color:#DFF3E4;
+  border-top:1px solid #86EFAC30;
+  margin-top:60px;
+}
+footer a { color:#86EFAC; text-decoration:none; }
+
+/* Призыв */
+.cta-banner {
+  background:linear-gradient(135deg,#2F7D4F,#58B368);
+  border-radius:16px;
+  padding:30px;
+  text-align:center;
+  margin:40px 0;
+  color:#fff;
+}
+.cta-banner h3 { color:#fff; font-size:24px; margin-bottom:10px; }
+.cta-banner p { margin-bottom:16px; }
+.cta-banner a {
+  display:inline-block;
+  background:#fff;
+  color:#14532D;
+  padding:12px 30px;
+  border-radius:10px;
+  text-decoration:none;
+  font-weight:bold;
+}
+
+@media (max-width:768px) {
+  .hero h1 { font-size:28px; }
+  .hero p { font-size:15px; }
+  .section-title { font-size:24px; }
+  .demo-chat { width:280px; }
+}
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <div class="hero-content">
+    <h1>Веб и чат-боты</h1>
+    <p>Лендинги на Tilda и свои решения, логика ботов, автоматизация заявок.</p>
+  </div>
+</div>
+
+<div class="topbar">
+  <a class="home" href="index.html">← На главную</a>
+  <a class="nav-sites" href="#sites">🌐 Лендинги</a>
+  <a class="nav-planner" href="#planner">📋 MAX Planner</a>
+  <a class="nav-bots" href="#bots">🤖 Бизнес-бот</a>
+  <a class="nav-demo" href="#demo">💬 Демо-бот</a>
+</div>
+
+<div class="wrap">
+
+  <!-- ========= ЛЕНДИНГИ ========= -->
+  <section id="sites">
+    <h2 class="section-title">🌐 Лендинги и сайты</h2>
+    <p class="section-sub">Посадочные страницы под рекламу и задачи бизнеса: структура, тексты, сбор заявок.</p>
+
+    <div class="grid">
+      <div class="card">
+        <span class="tag">Лендинг</span>
+        <span class="tag">Образование</span>
+        <h3>edustart — лендинг онлайн-школы</h3>
+        <p>Живой сайт: структура, оффер, формы заявок. Можно открыть и потрогать.</p>
+        <a class="btn btn-primary" href="https://kanzas77.github.io/edustart/" target="_blank">🔗 Смотреть живой сайт</a>
+      </div>
+
+      <div class="card">
+        <span class="tag">Сайт</span>
+        <span class="tag">Детские товары</span>
+        <h3>Полимерия — сайт бренда</h3>
+        <p>Готовый работающий сайт для бренда детских товаров.</p>
+        <a class="btn btn-primary" href="https://mk-polymeriya.tilda.ws" target="_blank">🔗 Смотреть живой сайт</a>
+      </div>
+    </div>
+
+    <div class="info-block" style="margin-top:20px;">
+      <strong style="color:#86EFAC;">💡 Нужен лендинг под вашу задачу?</strong><br>
+      Цена: <strong>от 15 000 ₽</strong> — структура, тексты, сбор заявок, адаптив под мобильные.
+    </div>
+  </section>
+
+  <!-- ========= MAX PLANNER ========= -->
+  <section id="planner">
+    <h2 class="section-title">📋 MAX Planner</h2>
+    <p class="section-sub">Готовый персональный планировщик задач и заметок. Работает полностью в браузере без серверов и регистрации.</p>
+
+    <div class="card">
+      <h3>Персональный планировщик</h3>
+      <p>Идеально для личного использования и малого бизнеса. Задачи с приоритетами и категориями, цветные заметки, статистика, резервное копирование.</p>
+
+      <div class="info-block">
+        <strong style="color:#86EFAC;">💾 Где хранятся данные:</strong><br>
+        Вся информация сохраняется локально на вашем компьютере или гаджете в файлах браузера <code>localStorage</code>. Никто, кроме вас, не имеет к ним доступа.<br><br>
+        <strong style="color:#86EFAC;">📍 Пути к файлам (для поиска):</strong><br>
+        • <strong>Chrome:</strong> <code>AppData\Local\Google\Chrome\User Data\Default\Local Storage\</code><br>
+        • <strong>Firefox:</strong> <code>AppData\Roaming\Mozilla\Firefox\Profiles\...\storage\</code><br>
+        • <strong>Edge:</strong> <code>AppData\Local\Microsoft\Edge\User Data\Default\Local Storage\</code>
+      </div>
+
+      <div class="keybox">
+        <strong style="font-size:16px;">🎁 Тестовый ключ на 7 дней:</strong><br>
+        <code>MAX-MW3Z-JJX2-MZN-XF8</code>
+        <p style="font-size:12px; color:#DFF3E4; margin-top:10px; opacity:0.8;">Не покупайте кота в мешке — попробуйте все возможности бесплатно</p>
+      </div>
+
+      <div style="margin-top:16px;">
+        <span class="price-tag">Тарифы: 299 ₽ — 4 999 ₽</span>
+      </div>
+
+      <div style="margin-top:16px;">
+        <a class="btn btn-primary" href="https://kanzas77.github.io/max-planner/" target="_blank">🔗 Открыть приложение</a>
+        <a class="btn btn-ghost" href="https://github.com/kanzas77/max-planner" target="_blank">📂 GitHub</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========= БИЗНЕС-БОТ (СКАЙНЕТ) ========= -->
+  <section id="bots">
+    <h2 class="section-title">🤖 AI-боты для бизнеса под ключ</h2>
+    <p class="section-sub">Мультиплатформенные чат-боты для автоматизации продаж, приема заявок и работы с клиентами.</p>
+
+    <div class="card">
+      <h3>Бизнес-бот «Скайнет»</h3>
+      <p>Бот забирает рутину: отвечает на вопросы, принимает заявки и передаёт их вам готовыми. Интеграция с нейросетями (GPT, Claude) для сложных диалогов. Хостинг и техническая поддержка включены.</p>
+
+      <div class="grid" style="grid-template-columns:repeat(auto-fit,minmax(200px,1fr));">
+        <div style="background:#05261B; padding:16px; border-radius:10px;">
+          <strong style="color:#86EFAC;">✨ Автоматические ответы</strong>
+          <p style="font-size:13px; margin-top:6px;">Клиент пишет в 3 часа ночи — бот отвечает мгновенно</p>
+        </div>
+        <div style="background:#05261B; padding:16px; border-radius:10px;">
+          <strong style="color:#86EFAC;">📥 Приём заявок</strong>
+          <p style="font-size:13px; margin-top:6px;">Сбор контактов, передача в CRM или Google-таблицу</p>
+        </div>
+        <div style="background:#05261B; padding:16px; border-radius:10px;">
+          <strong style="color:#86EFAC;">🧠 AI-интеграция</strong>
+          <p style="font-size:13px; margin-top:6px;">Умные ответы на сложные вопросы без шаблонов</p>
+        </div>
+        <div style="background:#05261B; padding:16px; border-radius:10px;">
+          <strong style="color:#86EFAC;">🌐 Три платформы</strong>
+          <p style="font-size:13px; margin-top:6px;">VK, MAX и Telegram из одного сценария</p>
+        </div>
+      </div>
+
+      <div style="margin-top:20px;">
+        <span class="price-tag">от 30 000 ₽</span>
+        <span style="color:#DFF3E4; margin-left:10px; font-size:14px;">разработка + хостинг на 3 месяца</span>
+      </div>
+
+      <div class="msg-btns">
+        <a class="msg-btn vk" href="https://vk.me/trafik_1" target="_blank">💬 Бот в VK</a>
+        <a class="msg-btn max" href="https://max.ru/se14763413_bot" target="_blank">💬 Бот в MAX</a>
+        <a class="msg-btn tg" href="https://t.me/YaroslavNeuroBot" target="_blank">✈️ Бот в Telegram</a>
+      </div>
+    </div>
+
+    <div class="info-block">
+      <strong style="color:#86EFAC;">💡 Связка «лендинг + бот» под ключ:</strong><br>
+      Посетитель приходит с рекламы → бот снимает контакты → вы получаете готовую заявку.<br>
+      Цена: <strong>от 40 000 ₽</strong>
+    </div>
+  </section>
+
+  <!-- ========= ДЕМО-БОТ ========= -->
+  <section id="demo">
+    <h2 class="section-title">💬 Демо-бот</h2>
+    <p class="section-sub">Простой бот для малого бизнеса: FAQ, кнопки, приём заявок. Попробуйте прямо сейчас в правом нижнем углу.</p>
+
+    <div class="card">
+      <h3>Готовый шаблон бота</h3>
+      <p>Идеально подходит для салонов красоты, барбершопов, небольших магазинов и сферы услуг. Отвечает на частые вопросы, принимает заявки, отправляет уведомления.</p>
+
+      <div class="grid" style="grid-template-columns:repeat(auto-fit,minmax(200px,1fr));">
+        <div style="background:#05261B; padding:16px; border-radius:10px;">
+          <strong style="color:#86EFAC;">⚡ Быстрый запуск</strong>
+          <p style="font-size:13px; margin-top:6px;">Готов к работе за 1-2 дня</p>
+        </div>
+        <div style="background:#05261B; padding:16px; border-radius:10px;">
+          <strong style="color:#86EFAC;">📱 Одна платформа</strong>
+          <p style="font-size:13px; margin-top:6px;">VK, MAX или Telegram на выбор</p>
+        </div>
+        <div style="background:#05261B; padding:16px; border-radius:10px;">
+          <strong style="color:#86EFAC;">📋 Меню и кнопки</strong>
+          <p style="font-size:13px; margin-top:6px;">Клиенту не нужно ничего печатать</p>
+        </div>
+        <div style="background:#05261B; padding:16px; border-radius:10px;">
+          <strong style="color:#86EFAC;">🔔 Уведомления</strong>
+          <p style="font-size:13px; margin-top:6px;">Вам приходят заявки в реальном времени</p>
+        </div>
+      </div>
+
+      <div style="margin-top:20px;">
+        <span class="price-tag">10 000 ₽</span>
+        <span style="color:#DFF3E4; margin-left:10px; font-size:14px;">фиксированная цена</span>
+      </div>
+
+      <div style="margin-top:16px; padding:16px; background:#86EFAC15; border-radius:10px; border:1px dashed #86EFAC;">
+        <strong style="color:#86EFAC;">💡 Попробуйте прямо сейчас:</strong>
+        <p style="margin-top:8px; font-size:14px;">Нажмите на иконку 💬 в правом нижнем углу экрана. Бот ответит на вопросы о ценах, сроках, кейсах и контактах — так же, как будет работать бот вашего бизнеса.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========= ПРИЗЫВ ========= -->
+  <div class="cta-banner">
+    <h3>Нужен лендинг или бот под вашу задачу?</h3>
+    <p>Напишите мне — обсудим вашу задачу и подберём оптимальное решение</p>
+    <a href="mailto:maxkan77@yandex.ru">✉️ maxkan77@yandex.ru</a>
+  </div>
+
+</div>
+
+<footer>
+  <p>Email: <a href="mailto:maxkan77@yandex.ru">maxkan77@yandex.ru</a> · +7 915 573 83 82 (MAX / звонок)</p>
+  <p style="margin-top:8px;">© 2026 Ярослав · Веб и чат-боты</p>
+</footer>
+
+<!-- ДЕМ-БОТ ВИДЖЕТ -->
+<div class="demo-widget">
+  <div class="demo-chat" id="demoChat">
+    <div class="demo-header">
+      <div class="demo-avatar">🤖</div>
+      <div>
+        <div class="demo-header-text">Бот Ярослава (демо)</div>
+        <div class="demo-header-sub">обычно отвечает мгновенно</div>
+      </div>
+    </div>
+    <div class="demo-messages" id="demoMessages">
+      <div class="demo-msg bot">Привет! Я демо-бот Ярослава. Спросите меня о ценах, сроках, кейсах или контактах 👇</div>
+    </div>
+    <div class="demo-options" id="demoOptions">
+      <div class="demo-opt" onclick="demoAnswer('price')">💰 Сколько стоит?</div>
+      <div class="demo-opt" onclick="demoAnswer('time')">⏱️ Какие сроки?</div>
+      <div class="demo-opt" onclick="demoAnswer('cases')">📂 Кейсы</div>
+      <div class="demo-opt" onclick="demoAnswer('contact')">📞 Контакты</div>
+    </div>
+  </div>
+  <button class="demo-toggle" onclick="toggleDemo()">💬</button>
+</div>
+
+<script>
+function toggleDemo() {
+  document.getElementById('demoChat').classList.toggle('open');
+}
+
+const answers = {
+  price: 'Демо-бот — 10 000 ₽ (фикс). Бизнес-бот под ключ — от 30 000 ₽. Связка «лендинг + бот» — от 40 000 ₽. Лендинг отдельно — от 15 000 ₽.',
+  time: 'Демо-бот — 1-2 дня. Бизнес-бот с AI — 7-14 дней. Лендинг — 5-10 дней. Всё зависит от сложности задачи.',
+  cases: 'Смотрите на этой странице: лендинги edustart и Полимерия живые. Также есть готовые продукты — MAX Planner и AI-боты в трёх мессенджерах (кнопки выше).',
+  contact: 'Напишите Ярославу удобным способом:\n📧 maxkan77@yandex.ru\n📞 +7 915 573 83 82\n💬 ВКонтакте, MAX или Telegram (кнопки в разделе «Бизнес-бот»)'
+};
+
+function demoAnswer(key) {
+  const messages = document.getElementById('demoMessages');
+  const options = document.getElementById('demoOptions');
+
+  // сообщение пользователя
+  const labels = { price:'💰 Сколько стоит?', time:'⏱️ Какие сроки?', cases:'📂 Кейсы', contact:'📞 Контакты' };
+  const userMsg = document.createElement('div');
+  userMsg.className = 'demo-msg user';
+  userMsg.textContent = labels[key];
+  messages.appendChild(userMsg);
+
+  // скрыть кнопки
+  options.style.display = 'none';
+
+  // ответ бота с задержкой
+  setTimeout(() => {
+    const botMsg = document.createElement('div');
+    botMsg.className = 'demo-msg bot';
+    botMsg.textContent = answers[key];
+    messages.appendChild(botMsg);
+    messages.scrollTop = messages.scrollHeight;
+
+    // кнопка "ещё вопрос"
+    setTimeout(() => {
+      options.style.display = 'flex';
+      options.innerHTML = '<div class="demo-opt" onclick="resetDemo()">🔄 Задать ещё вопрос</div>';
+    }, 500);
+  }, 600);
+
+  messages.scrollTop = messages.scrollHeight;
+}
+
+function resetDemo() {
+  const messages = document.getElementById('demoMessages');
+  const options = document.getElementById('demoOptions');
+  messages.innerHTML = '<div class="demo-msg bot">Привет! Я демо-бот Ярослава. Спросите меня о ценах, сроках, кейсах или контактах 👇</div>';
+  options.innerHTML = `
+    <div class="demo-opt" onclick="demoAnswer('price')">💰 Сколько стоит?</div>
+    <div class="demo-opt" onclick="demoAnswer('time')">⏱️ Какие сроки?</div>
+    <div class="demo-opt" onclick="demoAnswer('cases')">📂 Кейсы</div>
+    <div class="demo-opt" onclick="demoAnswer('contact')">📞 Контакты</div>
+  `;
+  options.style.display = 'flex';
+}
+</script>
+
+</body>
+</html>
