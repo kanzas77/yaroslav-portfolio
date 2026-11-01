@@ -5,144 +5,252 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Видеоконтент — Ярослав Ковалец</title>
 <style>
-  :root{--green:#2e9e6b; --bg:#f4f6f8; --card:#fff; --ink:#1f2328; --muted:#6b7280; --line:#e6e9ec}
-  *{box-sizing:border-box;margin:0;padding:0}
-  body{font-family:system-ui,-apple-system,sans-serif;background:var(--bg);color:var(--ink);line-height:1.6}
-  .wrap{max-width:900px;margin:0 auto;padding:40px 20px}
-  
-  header{margin-bottom:40px;text-align:center}
-  h1{font-size:clamp(28px,5vw,42px);font-weight:800;margin-bottom:10px}
-  p.sub{color:var(--muted);font-size:17px;max-width:600px;margin:0 auto}
-  a.back{display:inline-block;margin-top:20px;color:var(--green);text-decoration:none;font-weight:700}
-  
-  .gallery{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:24px;margin-top:40px}
-  .item{background:var(--card);border-radius:16px;overflow:hidden;border:1px solid var(--line)}
-  video,img{width:100%;height:auto;display:block;background:#000;aspect-ratio:16/9;object-fit:cover}
-  .desc{padding:16px}
-  .desc h3{font-size:18px;margin-bottom:6px}
-  .desc p{font-size:14px;color:var(--muted)}
+* { margin:0; padding:0; box-sizing:border-box; }
+html { scroll-behavior:smooth; }
+body {
+  font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;
+  color:#2C4A38;
+  background:linear-gradient(180deg, #F7FBEA 0%, #EFF7DC 45%, #E6F2CE 100%);
+  min-height:100vh;
+  padding-bottom:80px;
+  line-height:1.6;
+  position:relative;
+}
+/* СОТЫ НА ВСЮ СТРАНИЦУ */
+body::before {
+  content:''; position:fixed; inset:0; z-index:-1;
+  background-image:url("data:image/svg+xml,%3Csvg width='28' height='49' viewBox='0 0 28 49' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%232F7D4F' fill-opacity='0.08'%3E%3Cpath d='M13.99 9.25l13 7.5v15l-13 7.5L1 31.75v-15l12.99-7.5zM3 17.9v12.7l10.99 6.34 11-6.35V17.9l-11-6.34L3 17.9zM0 15l12.98-7.5V0h-2v6.35L0 12.69v2.3zm0 18.5L12.98 41v8h-2v-6.85L0 35.81v-2.3zM15 0v7.5L27.99 15H28v-2.31h-.01L17 6.35V0h-2zm0 49v-8l12.99-7.5H28v2.31h-.01L17 42.15V49h-2z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+  pointer-events:none;
+}
+.wrap { max-width:1000px; margin:0 auto; padding:0 20px; }
 
-  /* Блок кейса "Обработка фото" */
-  .case-block{margin-top:60px;padding-top:40px;border-top:1px solid var(--line);grid-column: 1 / -1;}
-  .case-block h2{text-align:center;margin-bottom:10px;font-size:24px}
-  .case-block > p{text-align:center;color:var(--muted);margin-bottom:30px}
-  
-  .case-grid{display:grid;grid-template-columns:1fr;gap:30px}
-  @media(min-width:768px){.case-grid{grid-template-columns:1fr 2fr}}
-  
-  .source-main img{aspect-ratio:3/4;object-fit:cover;border-radius:12px;border:2px solid var(--green)}
-  .source-label{text-align:center;margin-top:10px;font-weight:700;color:var(--green)}
-  
-  .results-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:16px}
-  .result-item{background:var(--card);border:1px solid var(--line);border-radius:12px;overflow:hidden}
-  .result-item video,.result-item img{aspect-ratio:16/9;object-fit:cover}
-  .result-item p{padding:10px;font-size:13px;color:var(--muted);text-align:center}
+/* ШАПКА С ФОТО */
+.hero-banner {
+  position:relative; width:100%; height:340px; overflow:hidden;
+  display:flex; align-items:center; justify-content:center; background:#DDEBCC;
+}
+@media (min-width:1024px) { .hero-banner { height:420px; } }
+.hero-banner::before {
+  content:''; position:absolute; inset:-30px;
+  background:url('header-video.jpg') center/cover no-repeat;
+  filter:blur(22px) brightness(1.6); transform:scale(1.12); z-index:0;
+}
+.hero-veil { position:absolute; inset:0; background:rgba(247,251,234,0.55); z-index:1; }
+.hero-photo {
+  position:absolute; inset:0; z-index:2;
+  background:url('header-video.jpg') center/contain no-repeat;
+  -webkit-mask-image:linear-gradient(to right, transparent 0%, #000 10%, #000 90%, transparent 100%);
+  mask-image:linear-gradient(to right, transparent 0%, #000 10%, #000 90%, transparent 100%);
+}
+.hero-banner::after {
+  content:''; position:absolute; inset:0; z-index:3;
+  background:linear-gradient(180deg, rgba(5,38,27,0) 45%, rgba(5,38,27,0.6) 100%);
+}
+.hero-content { position:relative; z-index:4; text-align:center; padding:20px; }
+.hero-banner h2 { font-size:clamp(24px,4vw,36px); color:#F5E9D0; margin:0; text-shadow:0 2px 10px rgba(0,0,0,.8); }
 
-  /* НОВЫЙ ПОДВАЛ */
-  footer{margin-top:50px;text-align:center;font-size:13px;background:var(--ink);color:#fff;padding:30px 20px;border-radius:16px}
-  footer b{color:#fff}
+/* МЕНЮ НАВИГАЦИИ */
+.topbar {
+  position:sticky; top:0; z-index:50;
+  background:rgba(255,255,255,0.95); backdrop-filter:blur(8px);
+  padding:12px 20px; display:flex; gap:10px; flex-wrap:wrap; justify-content:center;
+  box-shadow:0 4px 20px rgba(27,94,59,0.12); margin-bottom:40px;
+}
+.topbar a {
+  color:#1B5E3B; text-decoration:none; font-weight:600; font-size:14px;
+  padding:10px 18px; border-radius:10px; transition:all .2s; background:#E4F3E8;
+}
+.topbar a:hover { transform:translateY(-2px); box-shadow:0 6px 16px rgba(27,94,59,.2); background:#fff; }
+
+/* ЗАГОЛОВОК */
+header { text-align:center; margin-bottom:40px; padding-top:40px; }
+h1 { font-size:clamp(28px,5vw,42px); font-weight:800; margin-bottom:10px; color:#1B5E3B; }
+p.sub { color:#3E6B4F; font-size:17px; max-width:600px; margin:0 auto; }
+
+/* СЕКЦИИ */
+section { margin-bottom:60px; }
+section h2 { font-size:24px; margin-bottom:20px; color:#1B5E3B; border-bottom:2px solid #4CAF6D; display:inline-block; padding-bottom:6px; }
+section p.lead { color:#3E6B4F; margin-bottom:30px; font-size:16px; }
+
+/* ВИДЕО / ГАЛЕРЕЯ */
+.gallery { display:grid; grid-template-columns:repeat(auto-fit,minmax(280px,1fr)); gap:20px; }
+.item {
+  background:#FFFFFF; border-radius:16px; overflow:hidden;
+  border:1px solid #BFE0C8; box-shadow:0 8px 24px rgba(27,94,59,0.08);
+}
+video, img.cover {
+  width:100%; height:auto; display:block; background:#000;
+  aspect-ratio:16/9; object-fit:cover;
+}
+.desc { padding:16px; }
+.desc h3 { font-size:17px; margin-bottom:6px; color:#2F7D4F; }
+.desc p { font-size:14px; color:#33523F; line-height:1.5; }
+
+/* ТРАНСФОРМАЦИЯ ОБРАЗА */
+.transformation-grid {
+  display:grid; grid-template-columns:repeat(auto-fit,minmax(200px,1fr)); gap:20px;
+}
+.trans-item {
+  background:#FFFFFF; border-radius:16px; overflow:hidden;
+  border:1px solid #BFE0C8; box-shadow:0 8px 24px rgba(27,94,59,0.08);
+}
+.trans-item img { width:100%; height:auto; display:block; aspect-ratio:3/4; object-fit:cover; }
+.trans-label {
+  padding:12px; font-size:13px; color:#33523F; text-align:center;
+  background:#F7FBEA; border-top:1px solid #BFE0C8;
+}
+
+/* МАГНИТ / CTA */
+.cta-banner { background:linear-gradient(135deg,#4CAF6D,#7DC98F); border-radius:16px; padding:30px; text-align:center; margin:40px 0; color:#fff; }
+.cta-banner h3 { color:#fff; font-size:24px; margin-bottom:10px; }
+.cta-banner p { margin-bottom:16px; font-size:15px; }
+.magnet { display:inline-block; background:#fff; color:#1B5E3B; padding:14px 24px; border-radius:10px; font-weight:bold; font-size:15px; text-decoration:none; margin-top:8px; transition:transform .2s; }
+.magnet:hover { transform:translateY(-2px); box-shadow:0 8px 20px rgba(0,0,0,.2); }
+.cta-contacts { display:flex; gap:10px; flex-wrap:wrap; justify-content:center; margin-top:16px; }
+.cta-contacts a { background:#fff; color:#1B5E3B; padding:12px 20px; border-radius:10px; text-decoration:none; font-weight:bold; font-size:14px; }
+
+/* ПОДВАЛ */
+footer { margin-top:50px; text-align:center; font-size:13px; background:#1f2328; color:#fff; padding:30px 20px; border-radius:16px; }
+footer b { color:#fff; }
+
+@media (max-width:768px) { section h2 { font-size:22px; } }
+/* ----- ЗДЕСЬ КОНЧАЕТСЯ ЧАСТЬ 1, НЕ СОХРАНЯЙ ФАЙЛ ----- */
+/* ЦЕНЫ / ПАКЕТЫ */
+.pricing-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(260px,1fr)); gap:20px; margin-top:24px; }
+.price-card { background:#FFFFFF; border:1px solid #BFE0C8; border-radius:16px; padding:24px; box-shadow:0 8px 24px rgba(27,94,59,0.08); text-align:center; }
+.price-card h3 { color:#2F7D4F; font-size:18px; margin-bottom:8px; }
+.price-card .price { font-size:26px; font-weight:bold; color:#1B5E3B; margin:12px 0; }
+.price-card p { font-size:13px; color:#33523F; line-height:1.5; }
+/* ПРОЦЕСС */
+.process-steps { display:flex; flex-wrap:wrap; gap:16px; margin-top:20px; }
+.step { flex:1; min-width:160px; background:#FFFFFF; border:1px solid #BFE0C8; border-radius:12px; padding:18px; text-align:center; }
+.step .num { display:inline-block; width:32px; height:32px; line-height:32px; border-radius:50%; background:#4CAF6D; color:#fff; font-weight:bold; margin-bottom:10px; }
+.step h4 { color:#2F7D4F; font-size:15px; margin-bottom:6px; }
+.step p { font-size:12px; color:#33523F; }
+/* МАГНИТ / CTA */
+.cta-banner { background:linear-gradient(135deg,#4CAF6D,#7DC98F); border-radius:16px; padding:30px; text-align:center; margin:40px 0; color:#fff; }
+.cta-banner h3 { color:#fff; font-size:24px; margin-bottom:10px; }
+.cta-banner p { margin-bottom:16px; font-size:15px; }
+.magnet { display:inline-block; background:#fff; color:#1B5E3B; padding:14px 24px; border-radius:10px; font-weight:bold; font-size:15px; text-decoration:none; margin-top:8px; transition:transform .2s; }
+.magnet:hover { transform:translateY(-2px); box-shadow:0 8px 20px rgba(0,0,0,.2); }
+.cta-contacts { display:flex; gap:10px; flex-wrap:wrap; justify-content:center; margin-top:16px; }
+.cta-contacts a { background:#fff; color:#1B5E3B; padding:12px 20px; border-radius:10px; text-decoration:none; font-weight:bold; font-size:14px; }
+/* ПОДВАЛ */
+footer { margin-top:50px; text-align:center; font-size:13px; background:#1f2328; color:#fff; padding:30px 20px; border-radius:16px; }
+footer b { color:#fff; }
+@media (max-width:768px) { section h2 { font-size:22px; } }
 </style>
 </head>
 <body>
-<div class="wrap">
-  <header>
-    <h1>Видеоконтент</h1>
-    <p class="sub">AI-анимация, оживление фото, монтаж и персональные клипы.</p>
-    <a href="index.html">← На главную</a>
-  </header>
 
-  <div class="gallery">
-    <!-- Видео 1 -->
-    <div class="item">
-      <video controls preload="metadata"><source src="ai-balloon.mp4" type="video/mp4"></video>
-      <div class="desc"><h3>Флагман: Шары</h3><p>AI-генерация праздничной анимации</p></div>
-    </div>
-
-    <!-- Видео 2 -->
-    <div class="item">
-      <video controls preload="metadata"><source src="ai-fantasy.mp4" type="video/mp4"></video>
-      <div class="desc"><h3>Лукоморье</h3><p>Сказочная AI-визуализация</p></div>
-    </div>
-
-    <!-- Видео 3 -->
-    <div class="item">
-      <video controls preload="metadata"><source src="ai-dolphins.mp4" type="video/mp4"></video>
-      <div class="desc"><h3>Дельфины</h3><p>Динамичная морская сцена</p></div>
-    </div>
-
-    <!-- Видео 4 -->
-    <div class="item">
-      <video controls preload="metadata"><source src="ai-paris-live.mp4" type="video/mp4"></video>
-      <div class="desc"><h3>Париж Live</h3><p>Оживление статичного фото</p></div>
-    </div>
-
-    <!-- БЛОК КЕЙСА: Обработка исходного фото -->
-    <div class="case-block">
-      <h2>Кейс: Трансформация образа</h2>
-      <p>Из одного исходного фото созданы видео и новые ракурсы с помощью AI</p>
-      
-      <div class="case-grid">
-        <!-- Исходник слева -->
-        <div class="source-main">
-          <img src="ai-client-src-2.jpg" alt="Исходное фото">
-          <div class="source-label">ИСХОДНИК</div>
-        </div>
-        
-        <!-- Результаты справа -->
-        <div class="results-grid">
-          <div class="result-item">
-            <video controls preload="metadata"><source src="ai-client-live.mp4" type="video/mp4"></video>
-            <p>Видео: Девушка смеется</p>
-          </div>
-          <div class="result-item">
-            <img src="ai-client-src-3.jpg" alt="Результат 1">
-            <p>Фото: На набережной</p>
-          </div>
-          <div class="result-item">
-            <img src="ai-client-src-1.jpg" alt="Результат 2">
-            <p>Фото: Сидит в парке</p>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- Видео 6 -->
-    <div class="item">
-      <video controls preload="metadata"><source src="ai-moto-red.mp4" type="video/mp4"></video>
-      <div class="desc"><h3>Красный мотоцикл</h3><p>Предметная съемка / AI</p></div>
-    </div>
-
-    <!-- Видео 7 -->
-    <div class="item">
-      <video controls preload="metadata"><source src="ai-moto-black.mp4" type="video/mp4"></video>
-      <div class="desc"><h3>Черный мотоцикл</h3><p>Стильная динамика</p></div>
-    </div>
-
-    <!-- Видео 8 -->
-    <div class="item">
-      <video controls preload="metadata"><source src="ai-borsch.mp4" type="video/mp4"></video>
-      <div class="desc"><h3>Борщ</h3><p>Фуд-контент с AI-эффектами</p></div>
-    </div>
-
-    <!-- Видео 9 -->
-    <div class="item">
-      <video controls preload="metadata"><source src="ai-bears.mp4" type="video/mp4"></video>
-      <div class="desc"><h3>Медведи</h3><p>Юмористическая AI-сценка</p></div>
-    </div>
-
-    <!-- Видео 10 -->
-    <div class="item">
-      <video controls preload="metadata"><source src="ai-ip-open.mp4" type="video/mp4"></video>
-      <div class="desc"><h3>Рекламный ролик: ИП открыто</h3><p>Видео для бизнеса и соцсетей</p></div>
-    </div>
+<!-- ШАПКА С ФОТО -->
+<div class="hero-banner">
+  <div class="hero-veil"></div>
+  <div class="hero-photo"></div>
+  <div class="hero-content">
+    <h2>AI-анимация, оживление фото, монтаж и персональные клипы</h2>
   </div>
+</div>
 
-  <!-- НОВЫЙ ПОДВАЛ С КОНТАКТАМИ -->
-  <footer>
-    <b>Нужен видеоконтент под вашу задачу?</b><br>
-    maxkan77@yandex.ru · +7 915 573 83 82 (MAX / звонок)<br>
-    © 2026 Ярослав · Видеоконтент
-  </footer>
+<!-- МЕНЮ НАВИГАЦИИ -->
+<div class="topbar">
+  <a href="index.html">← На главную</a>
+  <a href="smm.html">SMM</a>
+  <a href="video.html">Видео</a>
+  <a href="copywriting.html">Копирайтинг</a>
+  <a href="web.html">Веб и боты</a>
+  <a href="presentation.html">Презентации</a>
+  <a href="index.html#contacts">Контакты</a>
+</div>
+
+<div class="wrap">
+
+<header>
+<h1>Видеоконтент</h1>
+<p class="sub">Оживляю статику, монтирую динамику и создаю AI-видео под задачи бизнеса.</p>
+</header>
+
+<!-- ГАЛЕРЕЯ ВИДЕО (ТВОЙ КОНТЕНТ) -->
+<section>
+<h2>Флагманские проекты</h2>
+<div class="gallery">
+<div class="item"><img src="shary.jpg" alt="Шары" class="cover"><div class="desc"><h3>Шары</h3><p>AI-генерация праздничной анимации</p></div></div>
+<div class="item"><img src="lukomorye.jpg" alt="Лукоморье" class="cover"><div class="desc"><h3>Лукоморье</h3><p>Сказочная AI-визуализация</p></div></div>
+<div class="item"><img src="dolphins.jpg" alt="Дельфины" class="cover"><div class="desc"><h3>Дельфины</h3><p>Динамичная морская сцена</p></div></div>
+<div class="item"><img src="paris-live.jpg" alt="Париж Live" class="cover"><div class="desc"><h3>Париж Live</h3><p>Оживление статичного фото</p></div></div>
+</div>
+</section>
+
+<!-- ТРАНСФОРМАЦИЯ ОБРАЗА -->
+<section>
+<h2>Кейс: Трансформация образа</h2>
+<p class="lead">Из одного исходного фото созданы видео и новые ракурсы с помощью AI.</p>
+<div class="transformation-grid">
+<div class="trans-item"><img src="trans-source.jpg" alt="Исходник"><div class="trans-label">ИСХОДНИК</div></div>
+<div class="trans-item"><video controls preload="metadata"><source src="trans-video.mp4" type="video/mp4"></video><div class="trans-label">Видео: Девушка смеется</div></div>
+<div class="trans-item"><img src="trans-photo-1.jpg" alt="На набережной"><div class="trans-label">Фото: На набережной</div></div>
+<div class="trans-item"><img src="trans-photo-2.jpg" alt="Сидит в парке"><div class="trans-label">Фото: Сидит в парке</div></div>
+</div>
+</section>
+
+<!-- МОТОЦИКЛЫ И ПРЕДМЕТКА -->
+<section>
+<h2>Предметная съемка и динамика</h2>
+<div class="gallery">
+<div class="item"><img src="moto-red.jpg" alt="Красный мотоцикл" class="cover"><div class="desc"><h3>Красный мотоцикл</h3><p>Предметная съемка / AI</p></div></div>
+<div class="item"><img src="moto-black.jpg" alt="Черный мотоцикл" class="cover"><div class="desc"><h3>Черный мотоцикл</h3><p>Стильная динамика</p></div></div>
+</div>
+</section>
+
+<!-- ФУД-КОНТЕНТ И ЮМОР -->
+<section>
+<h2>Фуд-контент и креатив</h2>
+<div class="gallery">
+<div class="item"><img src="borscht.jpg" alt="Борщ" class="cover"><div class="desc"><h3>Борщ</h3><p>Фуд-контент с AI-эффектами</p></div></div>
+<div class="item"><img src="bears.jpg" alt="Медведи" class="cover"><div class="desc"><h3>Медведи</h3><p>Юмористическая AI-сценка</p></div></div>
+<div class="item"><video controls preload="metadata"><source src="ip-opened.mp4" type="video/mp4"></video><div class="desc"><h3>Рекламный ролик: ИП открыто</h3><p>Видео для бизнеса и соцсетей</p></div></div>
+</div>
+</section>
+
+<!-- КАК Я РАБОТАЮ -->
+<section>
+<h2>Как я работаю</h2>
+<div class="process-steps">
+<div class="step"><div class="num">1</div><h4>Задача</h4><p>Разбираю цель видео: продажа, имидж или развлечение</p></div>
+<div class="step"><div class="num">2</div><h4>Подготовка</h4><p>Подбор референсов, генерация базы через AI</p></div>
+<div class="step"><div class="num">3</div><h4>Производство</h4><p>Монтаж, цветокоррекция, наложение эффектов</p></div>
+<div class="step"><div class="num">4</div><h4>Адаптация</h4><p>Версии под VK, OK, Reels, TikTok и Stories</p></div>
+</div>
+</section>
+
+<!-- ЦЕНЫ -->
+<section>
+<h2>Пакеты и цены</h2>
+<div class="pricing-grid">
+<div class="price-card"><h3>AI-оживление фото</h3><div class="price">от 3 000 ₽</div><p>Превращаю статику в динамичное видео за 24 часа</p></div>
+<div class="price-card"><h3>Монтаж ролика</h3><div class="price">от 5 000 ₽</div><p>Нарезка, переходы, музыка, титры под соцсети</p></div>
+<div class="price-card"><h3>Персональный клип</h3><div class="price">от 10 000 ₽</div><p>Полный цикл: идея, генерация, монтаж, адаптация</p></div>
+</div>
+</section>
+
+<!-- МАГНИТ + КОНТАКТЫ -->
+<div class="cta-banner">
+<h3>Нужен видеоконтент под вашу задачу?</h3>
+<p>Напишите — предложу формат и рассчитаю стоимость. Использую AI для скорости, но финальный результат всегда выверяю вручную на качество и смысл.</p>
+<a href="mailto:maxkan77@yandex.ru?subject=Заявка на видео" class="magnet">✉️ Обсудить проект</a>
+<div class="cta-contacts">
+<a href="mailto:maxkan77@yandex.ru">✉️ maxkan77@yandex.ru</a>
+<a href="tel:+79155738382">📞 +7 915 573 83 82</a>
+<a href="https://max.ru/u/f9LHodD0cOLGK0MEDW7ckDw4dWKV1q6HHlltzT0qiLdaA0zezeURx_b2tKk" target="_blank">💬 Написать в MAX</a>
+</div>
+</div>
+
+<footer>
+<b>Нужен видеоконтент под ваш бизнес?</b><br>
+maxkan77@yandex.ru · +7 915 573 83 82 (MAX / звонок)<br>
+© 2026 Ярослав · Видеоконтент
+</footer>
+
 </div>
 </body>
 </html>
