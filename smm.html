@@ -1,0 +1,262 @@
+﻿<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SMM и контент — Ярослав Ковалец</title>
+<style>
+* { margin:0; padding:0; box-sizing:border-box; }
+html { scroll-behavior:smooth; }
+body {
+  font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;
+  color:#2C4A38;
+  background:linear-gradient(180deg, #F7FBEA 0%, #EFF7DC 45%, #E6F2CE 100%);
+  min-height:100vh;
+  padding-bottom:80px;
+}
+.wrap { max-width:1000px; margin:0 auto; padding:40px 20px; }
+header { margin-bottom:40px; text-align:center; }
+header h1 { font-size:clamp(28px,5vw,42px); color:#1B5E3B; margin-bottom:10px; }
+header p.sub { color:#3E6B4F; font-size:17px; max-width:600px; margin:0 auto; }
+a.back { display:inline-block; margin-top:20px; color:#4CAF6D; text-decoration:none; font-weight:700; }
+/* ШАПКА-БАННЕР */
+.hero-banner { position:relative; width:100%; height:300px; border-radius:20px; overflow:hidden; margin-bottom:50px; display:flex; align-items:center; justify-content:center; color:#fff; }
+.hero-banner img { position:absolute; top:0; left:0; width:100%; height:100%; object-fit:cover; z-index:1; filter:brightness(0.6); }
+.hero-banner h2 { position:relative; z-index:2; font-size:clamp(24px,4vw,36px); text-align:center; padding:20px; text-shadow:0 2px 10px rgba(0,0,0,.8); }
+/* СЕКЦИИ */
+section { margin-bottom:60px; }
+section > h2 { font-size:24px; margin-bottom:20px; color:#1B5E3B; border-bottom:2px solid #4CAF6D; display:inline-block; padding-bottom:6px; }
+section p.lead { color:#3E6B4F; margin-bottom:30px; font-size:16px; }
+/* ГАЛЕРЕЯ ФОТО/ВИДЕО */
+.gallery { display:grid; grid-template-columns:repeat(auto-fit,minmax(250px,1fr)); gap:20px; }
+.item { background:#FFFFFF; border-radius:16px; overflow:hidden; border:1px solid #BFE0C8; box-shadow:0 8px 24px rgba(27,94,59,0.08); }
+video, img.cover { width:100%; height:auto; display:block; background:#000; aspect-ratio:16/9; object-fit:cover; }
+.desc { padding:14px; }
+.desc h3 { font-size:17px; margin-bottom:4px; color:#2F7D4F; }
+.desc p { font-size:13px; color:#33523F; }
+/* КЛИПЫ */
+.clips-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(280px,1fr)); gap:20px; }
+.clips-grid img { width:100%; border-radius:12px; border:1px solid #BFE0C8; box-shadow:0 8px 24px rgba(27,94,59,0.08); }
+/* КЕЙСЫ С ВЫПАДАЮЩИМ ТЕКСТОМ */
+.case-card { background:#FFFFFF; border:1px solid #BFE0C8; border-radius:16px; overflow:hidden; margin-bottom:24px; box-shadow:0 8px 24px rgba(27,94,59,0.08); }
+.case-header { display:flex; gap:20px; padding:20px; cursor:pointer; align-items:flex-start; flex-wrap:wrap; }
+.case-img { width:280px; height:160px; object-fit:cover; border-radius:12px; flex-shrink:0; background:#E4F3E8; }
+.case-info { flex:1; min-width:250px; }
+.case-info h3 { color:#2F7D4F; font-size:20px; margin-bottom:8px; }
+.case-info .case-meta { font-size:13px; color:#3E6B4F; margin-bottom:10px; }
+.case-info .case-result { font-size:14px; color:#33523F; line-height:1.5; margin-bottom:12px; }
+.case-toggle { display:inline-flex; align-items:center; gap:6px; color:#4CAF6D; font-weight:600; font-size:14px; cursor:pointer; user-select:none; }
+.case-toggle:hover { color:#2F7D4F; }
+.case-toggle .arrow { transition:transform .3s; display:inline-block; }
+.case-card.open .case-toggle .arrow { transform:rotate(180deg); }
+.case-body { max-height:0; overflow:hidden; transition:max-height .4s ease; background:#F7FBEA; border-top:1px solid #BFE0C8; }
+.case-card.open .case-body { max-height:3000px; }
+.case-body-inner { padding:24px; font-size:14px; line-height:1.7; color:#2C4A38; }
+.case-body-inner h4 { color:#1B5E3B; font-size:16px; margin:16px 0 8px; }
+.case-body-inner p { margin-bottom:10px; }
+.case-body-inner ul { margin:8px 0 12px 20px; }
+.case-body-inner li { margin-bottom:6px; }
+.case-body-inner strong { color:#2F7D4F; }
+/* ----- ЗДЕСЬ КОНЧАЕТСЯ ЧАСТЬ 1, НЕ СОХРАНЯЙ ФАЙЛ ----- */
+/* ЦЕНЫ / ПАКЕТЫ */
+.pricing-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(260px,1fr)); gap:20px; margin-top:24px; }
+.price-card { background:#FFFFFF; border:1px solid #BFE0C8; border-radius:16px; padding:24px; box-shadow:0 8px 24px rgba(27,94,59,0.08); text-align:center; }
+.price-card h3 { color:#2F7D4F; font-size:18px; margin-bottom:8px; }
+.price-card .price { font-size:26px; font-weight:bold; color:#1B5E3B; margin:12px 0; }
+.price-card p { font-size:13px; color:#33523F; line-height:1.5; }
+/* ПРОЦЕСС */
+.process-steps { display:flex; flex-wrap:wrap; gap:16px; margin-top:20px; }
+.step { flex:1; min-width:160px; background:#FFFFFF; border:1px solid #BFE0C8; border-radius:12px; padding:18px; text-align:center; }
+.step .num { display:inline-block; width:32px; height:32px; line-height:32px; border-radius:50%; background:#4CAF6D; color:#fff; font-weight:bold; margin-bottom:10px; }
+.step h4 { color:#2F7D4F; font-size:15px; margin-bottom:6px; }
+.step p { font-size:12px; color:#33523F; }
+/* МАГНИТ / CTA */
+.cta-banner { background:linear-gradient(135deg,#4CAF6D,#7DC98F); border-radius:16px; padding:30px; text-align:center; margin:40px 0; color:#fff; }
+.cta-banner h3 { color:#fff; font-size:24px; margin-bottom:10px; }
+.cta-banner p { margin-bottom:16px; font-size:15px; }
+.magnet { display:inline-block; background:#fff; color:#1B5E3B; padding:14px 24px; border-radius:10px; font-weight:bold; font-size:15px; text-decoration:none; margin-top:8px; transition:transform .2s; }
+.magnet:hover { transform:translateY(-2px); box-shadow:0 8px 20px rgba(0,0,0,.2); }
+.cta-contacts { display:flex; gap:10px; flex-wrap:wrap; justify-content:center; margin-top:16px; }
+.cta-contacts a { background:#fff; color:#1B5E3B; padding:12px 20px; border-radius:10px; text-decoration:none; font-weight:bold; font-size:14px; }
+/* ПОДВАЛ */
+footer { margin-top:50px; text-align:center; font-size:13px; background:#1f2328; color:#fff; padding:30px 20px; border-radius:16px; }
+footer b { color:#fff; }
+@media (max-width:768px) {
+  .case-header { flex-direction:column; }
+  .case-img { width:100%; height:180px; }
+  section > h2 { font-size:22px; }
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header>
+<h1>SMM и контент</h1>
+<p class="sub">Стратегии, AI-визуал, ведение аккаунтов и клипы с реальными охватами.</p>
+<a href="index.html" class="back">← На главную</a>
+</header>
+
+<!-- БАННЕР (твоё фото ai-robot-money.jpg — оставлено) -->
+<div class="hero-banner">
+<img src="ai-robot-money.jpg" alt="AI стратегии">
+<h2>AI-стратегии для роста выручки</h2>
+</div>
+
+<!-- КЕЙС ПОЛИМЕРИЯ (фото + видео — ВОЗВРАЩЕНО) -->
+<section>
+<h2>Кейс: Полимерия</h2>
+<p class="lead">Создание тёплого, эмоционального контента для бренда детских товаров. Работа с AI-визуалом и сторителлинг.</p>
+<div class="gallery">
+<div class="item"><img src="polimeria-1.jpg" alt="Полимерия 1" class="cover"><div class="desc"><h3>Сказочные герои</h3><p>Лиса и медведь в пластилиновом стиле</p></div></div>
+<div class="item"><img src="polimeria-2.jpg" alt="Полимерия 2" class="cover"><div class="desc"><h3>Занятие в группе</h3><p>Живая атмосфера детского сада</p></div></div>
+<div class="item"><img src="polimeria-3.jpg" alt="Полимерия 3" class="cover"><div class="desc"><h3>Мама и дочь</h3><p>Семейные ценности бренда</p></div></div>
+<div class="item"><video controls preload="metadata"><source src="polimeria-video-1.mp4" type="video/mp4"></video><div class="desc"><h3>Видео для ВК</h3><p>Анимация для соцсетей</p></div></div>
+<div class="item"><video controls preload="metadata"><source src="polimeria-video-2.mp4" type="video/mp4"></video><div class="desc"><h3>Видео для ОК</h3><p>Эмоциональный ролик</p></div></div>
+</div>
+</section>
+
+<!-- БЛОК КЛИПОВ (скриншоты статистики — ВОЗВРАЩЕНО) -->
+<section>
+<h2>Клипы для соцсетей</h2>
+<p class="lead">Реальные просмотры и охваты в VK и OK. Динамичный монтаж и трендовая подача.</p>
+<div class="clips-grid">
+<img src="clip-neuro-1.jpg" alt="Статистика клипов 1">
+<img src="clip-neuro-2.jpg" alt="Статистика клипов 2">
+<img src="clip-neuro-3.jpg" alt="Статистика клипов 3">
+</div>
+</section>
+
+<!-- НОВЫЕ КЕЙСЫ С ВЫПАДАЮЩИМ ТЕКСТОМ -->
+<section>
+<h2>Контент-кейсы (нажми — раскроется)</h2>
+<p class="lead">Текст открывается прямо здесь, без перехода на другую страницу.</p>
+
+<div class="case-card" onclick="toggleCase(this)">
+<div class="case-header">
+<img src="case-urban.jpg" alt="URBAN Awards" class="case-img">
+<div class="case-info">
+<h3>URBAN Awards — контент-стратегия</h3>
+<div class="case-meta">Недвижимость · девелоперы, архитекторы, инвесторы</div>
+<div class="case-result">Редакционный план на неделю: 5 дней × 6–7 материалов = <strong>30–35 постов под 4 канала</strong> с единым инфоповодом.</div>
+<span class="case-toggle">Читать полностью <span class="arrow">▼</span></span>
+</div>
+</div>
+<div class="case-body"><div class="case-body-inner">
+<p><strong>Задача:</strong> неделя контента для премии URBAN Awards. Каналы — сайт, Telegram, еженедельная рассылка.</p>
+<h4>День 1 — Пробуждение рынка (аналитика + интрига)</h4>
+<ul><li>Новость: «URBAN Awards 2025: первые 3 номинанта — и почему их не было в прошлом году»</li><li>Интервью с архитектором проекта «Парк-2» (Тверская, 17)</li><li>Обзор: «5 трендов в дизайне офисных лобби, которые уже ушли в прошлое»</li><li>Колонка: «Почему "зелёные" фасады перестали быть премиумом»</li><li>Инфографика: сравнение требований к энергоэффективности 2024 vs 2025</li><li>Триггер-пост с CTA «Загрузите проект за 2 минуты»</li></ul>
+<h4>День 2 — Проекты, которые победили</h4><p>Интервью с руководителем ТЦ «Сити-Порт», фотосторителлинг победителя «Самый смелый дизайн».</p>
+<h4>День 3 — Тренды и пробелы (провокация + данные)</h4><p>Новая норма Минстроя «социальная урбанистика», карта регионов, где запрещают «бетонные пустоты».</p>
+<h4>День 4 — Практика и ошибки (жёстко, без прикрас)</h4><p>5 ошибок, из-за которых проекты теряют номинацию. Чек-лист «10 пунктов заявки» — PDF-скачивание.</p>
+<h4>День 5 — Победа и после (вдохновение + действия)</h4><p>CTA-пост «Премия не ждёт. Она — инструмент» с кнопкой «Подать заявку» на всех трёх каналах.</p>
+<p><strong>Итог:</strong> баланс 40% новостей, 25% интервью, 20% обзоров, 15% практики. Тон — жёсткий, экспертный, без пафоса. Цель — не «вдохновить», а заставить действовать.</p>
+</div></div>
+</div>
+
+<div class="case-card" onclick="toggleCase(this)">
+<div class="case-header">
+<img src="case-fitness.jpg" alt="Фитнес-тренер" class="case-img">
+<div class="case-info">
+<h3>Фитнес-тренер — Telegram-пост для мужской ЦА 35+</h3>
+<div class="case-meta">Спорт · мужчины 35+, занятые, уставшие от прошлых попыток</div>
+<div class="case-result">Эмпатичный пост «Я уже пробовал — не работает». CTA «ползунок» даёт <strong>квалифицированные заявки</strong>.</div>
+<span class="case-toggle">Читать полностью <span class="arrow">▼</span></span>
+</div>
+</div>
+<div class="case-body"><div class="case-body-inner">
+<p><strong>Задача:</strong> пробить барьер «не верю, что получится снова». Триггер — честность + адаптивность вместо мотивационного шума.</p>
+<h4>Полный текст поста</h4>
+<p>«Я уже пробовал — не работает». Знакомая фраза? Я слышу её на первой же консультации. И это нормально.</p>
+<p>Если вы мужчина 35+, работаете в офисе или на вахте, у вас семья и к вечеру силы на нуле — вы не «слабый». Вы просто пробовали системы, которые рассчитаны на другого человека. На того, у кого есть 2 часа в день на зал и железная дисциплина после 10-часовой смены.</p>
+<p><strong>«Ползунок» — не про героизм. Он про адаптацию:</strong></p>
+<ul><li>Тренировка сорвалась? Сдвинули на 15 минут или разбили на две части.</li><li>Не успели поесть по расписанию? Есть алгоритм, как не «упасть» в сахарную яму.</li><li>Нет сил на сложное меню? Берём 3–4 базовых варианта под ваши условия.</li></ul>
+<p>Я сам прошёл через период, когда «надо» не совпадало с «могу». И собрал систему, которая работает, когда время — дефицит, а не ресурс. Не обещаю, что будет легко. Обещаю, что будет по-человечески.</p>
+<p>Если узнали себя — напишите «ползунок» в личку. Пришлю короткую инструкцию: как начать, если веры мало, а усталости — много. Без обязательств.</p>
+<p><strong>Результат:</strong> пост строит доверие быстрее любой мотивационной риторики. CTA «ползунок» фильтрует аудиторию — приходят люди уже с правильной установкой.</p>
+</div></div>
+</div>
+
+<div class="case-card" onclick="toggleCase(this)">
+<div class="case-header">
+<img src="case-ostro.jpg" alt="OSTRO AI" class="case-img">
+<div class="case-info">
+<h3>OSTRO AI — контент-машина для экспертов</h3>
+<div class="case-meta">Reels/TikTok · коучи, психологи, юристы, B2B, блогеры 30–50</div>
+<div class="case-result">3 формата × 2 сценария = <strong>6 готовых роликов</strong> с хуками, байтами и логикой привлечения заявок.</div>
+<span class="case-toggle">Читать полностью <span class="arrow">▼</span></span>
+</div>
+</div>
+<div class="case-body"><div class="case-body-inner">
+<p><strong>Задача:</strong> ролики, которые попадают в рекомендации и приводят заявки. Объём — 3 формата + 6 готовых сценариев.</p>
+<h4>Формат 1. «Алгоритм не врёт — вот что он видит в вашем аккаунте»</h4>
+<p>Быстрый разбор типичного аккаунта с точки зрения алгоритма. Хук: «Основная ошибка 9 из 10 экспертов в TikTok…». Байт: напишите «анализ» — покажем, что мешает попаданиям в рекомендации.</p>
+<h4>Формат 2. «Контент-машина за 7 дней»</h4>
+<p>Пошаговая демонстрация: от скрипта с ИИ до публикации. День 1 — анализ, День 2 — 10 сценариев, День 3 — съёмка 5 роликов одним дублем, День 4 — монтаж с ИИ, День 5 — публикация по графику.</p>
+<h4>Формат 3. «То, что миллионы блогеров скрывают»</h4>
+<p>Главный сигнал алгоритма — не лайки, а <strong>replay rate</strong>: если человек пересматривает ролик, TikTok считает его ценным. Мы строим видео так, чтобы финал вызывал желание пересмотреть.</p>
+<p><strong>Результат:</strong> 6 готовых к съёмке сценариев с хуками и байтами. Клиент получает не «советы», а фабрику контента с логикой привлечения заявок.</p>
+</div></div>
+</div>
+</section>
+
+<!-- ЧТО ВХОДИТ В SMM ПОД КЛЮЧ -->
+<section>
+<h2>Что входит в SMM под ключ</h2>
+<div class="pricing-grid">
+<div class="price-card"><h3>🎯 Стратегия</h3><p>Смысловая концепция и позиционирование под вашу ЦА</p></div>
+<div class="price-card"><h3>📅 Контент-план</h3><p>План публикаций на месяц с балансом форматов</p></div>
+<div class="price-card"><h3>✍️ Тексты постов</h3><p>Продающие и эмпатичные тексты без клише</p></div>
+<div class="price-card"><h3>🎨 ТЗ на визуал</h3><p>Карточки, обложки, референсы для дизайнера</p></div>
+<div class="price-card"><h3>🎬 Сценарии Reels</h3><p>Ролики с хуками под алгоритмы рекомендаций</p></div>
+<div class="price-card"><h3>📊 Аналитика</h3><p>Замер метрик и корректировка стратегии</p></div>
+</div>
+</section>
+
+<!-- КАК Я РАБОТАЮ -->
+<section>
+<h2>Как я работаю</h2>
+<div class="process-steps">
+<div class="step"><div class="num">1</div><h4>Аудит канала</h4><p>Разбираю текущий контент, ЦА, оффер конкурентов</p></div>
+<div class="step"><div class="num">2</div><h4>Стратегия</h4><p>Концепция, тон, рубрики, инфоповоды</p></div>
+<div class="step"><div class="num">3</div><h4>Контент-план</h4><p>Структура публикаций на период</p></div>
+<div class="step"><div class="num">4</div><h4>Производство</h4><p>Тексты + ТЗ на визуал через ИИ, но голос — человеческий</p></div>
+<div class="step"><div class="num">5</div><h4>Запуск и замер</h4><p>Публикация, аналитика, доработка</p></div>
+</div>
+</section>
+
+<!-- ЦЕНЫ -->
+<section>
+<h2>Пакеты и цены</h2>
+<div class="pricing-grid">
+<div class="price-card"><h3>Аудит канала</h3><div class="price">5 000 ₽</div><p>Разбор текущего контента + письменные рекомендации по росту</p></div>
+<div class="price-card"><h3>Контент-план на месяц</h3><div class="price">от 15 000 ₽</div><p>Тексты постов + ТЗ на визуал + сценарии Reels</p></div>
+<div class="price-card"><h3>Ведение под ключ</h3><div class="price">от 30 000 ₽/мес</div><p>Посты + сторис + аналитика + корректировка стратегии</p></div>
+</div>
+</section>
+
+<!-- МАГНИТ + КОНТАКТЫ -->
+<div class="cta-banner">
+<h3>Есть задача по SMM? Давайте обсудим</h3>
+<p>Напишите — разберу вашу ситуацию и предложу решение. Использую AI для скорости, но каждый текст выверяю вручную на человечность и пользу для клиента.</p>
+<a href="mailto:maxkan77@yandex.ru?subject=Бесплатный аудит канала" class="magnet">🎁 Бесплатный аудит канала за 24 часа</a>
+<div class="cta-contacts">
+<a href="mailto:maxkan77@yandex.ru">✉️ maxkan77@yandex.ru</a>
+<a href="tel:+79155738382">📞 +7 915 573 83 82</a>
+<a href="https://max.ru/u/f9LHodD0cOLGK0MEDW7ckDw4dWKV1q6HHlltzT0qiLdaA0zezeURx_b2tKk" target="_blank">💬 Написать в MAX</a>
+</div>
+</div>
+
+<footer>
+<b>Нужен SMM и контент под ваш бизнес?</b><br>
+maxkan77@yandex.ru · +7 915 573 83 82 (MAX / звонок)<br>
+© 2026 Ярослав · SMM и контент
+</footer>
+
+</div>
+
+<script>
+function toggleCase(card){ card.classList.toggle('open'); }
+</script>
+</body>
+</html>
