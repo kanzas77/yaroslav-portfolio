@@ -1,0 +1,382 @@
+﻿<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Презентации — Ярослав Ковалец</title>
+<style>
+* { margin:0; padding:0; box-sizing:border-box; }
+html { scroll-behavior:smooth; }
+body {
+  font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;
+  color:#2C4A38;
+  background:linear-gradient(180deg, #F7FBEA 0%, #EFF7DC 45%, #E6F2CE 100%);
+  min-height:100vh;
+  padding-bottom:80px;
+  line-height:1.6;
+  position:relative;
+}
+/* СОТЫ НА ВСЮ СТРАНИЦУ */
+body::before {
+  content:''; position:fixed; inset:0; z-index:-1;
+  background-image:url("data:image/svg+xml,%3Csvg width='28' height='49' viewBox='0 0 28 49' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%232F7D4F' fill-opacity='0.08'%3E%3Cpath d='M13.99 9.25l13 7.5v15l-13 7.5L1 31.75v-15l12.99-7.5zM3 17.9v12.7l10.99 6.34 11-6.35V17.9l-11-6.34L3 17.9zM0 15l12.98-7.5V0h-2v6.35L0 12.69v2.3zm0 18.5L12.98 41v8h-2v-6.85L0 35.81v-2.3zM15 0v7.5L27.99 15H28v-2.31h-.01L17 6.35V0h-2zm0 49v-8l12.99-7.5H28v2.31h-.01L17 42.15V49h-2z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+  pointer-events:none;
+}
+.wrap { max-width:1000px; margin:0 auto; padding:0 20px; }
+
+/* ШАПКА С ФОТО */
+.hero-banner {
+  position:relative; width:100%; height:340px; overflow:hidden;
+  display:flex; align-items:center; justify-content:center; background:#DDEBCC;
+}
+@media (min-width:1024px) { .hero-banner { height:420px; } }
+.hero-banner::before {
+  content:''; position:absolute; inset:-30px;
+  background:url('header-present.jpg') center/cover no-repeat;
+  filter:blur(22px) brightness(1.6); transform:scale(1.12); z-index:0;
+}
+.hero-veil { position:absolute; inset:0; background:rgba(247,251,234,0.55); z-index:1; }
+.hero-photo {
+  position:absolute; inset:0; z-index:2;
+  background:url('header-present.jpg') center/contain no-repeat;
+  -webkit-mask-image:linear-gradient(to right, transparent 0%, #000 10%, #000 90%, transparent 100%);
+  mask-image:linear-gradient(to right, transparent 0%, #000 10%, #000 90%, transparent 100%);
+}
+.hero-banner::after {
+  content:''; position:absolute; inset:0; z-index:3;
+  background:linear-gradient(180deg, rgba(5,38,27,0) 45%, rgba(5,38,27,0.6) 100%);
+}
+.hero-content { position:relative; z-index:4; text-align:center; padding:20px; }
+.hero-banner h2 { font-size:clamp(24px,4vw,36px); color:#F5E9D0; margin:0; text-shadow:0 2px 10px rgba(0,0,0,.8); }
+
+/* МЕНЮ НАВИГАЦИИ */
+.topbar {
+  position:sticky; top:0; z-index:50;
+  background:rgba(255,255,255,0.95); backdrop-filter:blur(8px);
+  padding:12px 20px; display:flex; gap:10px; flex-wrap:wrap; justify-content:center;
+  box-shadow:0 4px 20px rgba(27,94,59,0.12); margin-bottom:40px;
+}
+.topbar a {
+  color:#1B5E3B; text-decoration:none; font-weight:600; font-size:14px;
+  padding:10px 18px; border-radius:10px; transition:all .2s; background:#E4F3E8;
+}
+.topbar a:hover { transform:translateY(-2px); box-shadow:0 6px 16px rgba(27,94,59,.2); background:#fff; }
+
+/* ЗАГОЛОВОК */
+header { text-align:center; margin-bottom:40px; padding-top:40px; }
+h1 { font-size:clamp(28px,5vw,42px); font-weight:800; margin-bottom:10px; color:#1B5E3B; }
+p.sub { color:#3E6B4F; font-size:17px; max-width:600px; margin:0 auto; }
+
+/* СЕКЦИИ */
+section { margin-bottom:60px; }
+section h2 { font-size:24px; margin-bottom:20px; color:#1B5E3B; border-bottom:2px solid #4CAF6D; display:inline-block; padding-bottom:6px; }
+section p.lead { color:#3E6B4F; margin-bottom:30px; font-size:16px; }
+
+/* УСЛУГИ С ИКОНКАМИ */
+.services-list { display:flex; flex-direction:column; gap:16px; }
+.service-item {
+  display:flex; align-items:flex-start; gap:16px;
+  background:#FFFFFF; border:1px solid #BFE0C8; border-left:4px solid #4CAF6D;
+  border-radius:12px; padding:20px; box-shadow:0 4px 12px rgba(27,94,59,0.05);
+}
+.service-icon {
+  width:48px; height:48px; flex-shrink:0;
+  background:#E4F3E8; border-radius:10px;
+  display:flex; align-items:center; justify-content:center;
+  font-size:24px; color:#2F7D4F;
+}
+.service-text h3 { color:#2F7D4F; font-size:18px; margin-bottom:6px; }
+.service-text p { color:#33523F; font-size:14px; line-height:1.5; }
+
+/* ПРЕЗЕНТАЦИЯ (СЛАЙДЫ С ТЕКСТАМИ) */
+.presentation-viewer {
+  background:#FFFFFF; border:1px solid #BFE0C8; border-radius:16px;
+  padding:30px; box-shadow:0 8px 24px rgba(27,94,59,0.08);
+}
+.slide {
+  display:none; /* Скрываем все слайды */
+  animation:fadeIn 0.5s;
+}
+.slide.active { display:block; } /* Показываем активный */
+@keyframes fadeIn { from { opacity:0; } to { opacity:1; } }
+.slide h3 { color:#1B5E3B; font-size:22px; margin-bottom:16px; border-bottom:1px solid #BFE0C8; padding-bottom:10px; }
+.slide p { margin-bottom:12px; color:#33523F; }
+.slide ul { margin:12px 0 12px 24px; color:#33523F; }
+.slide li { margin-bottom:8px; }
+.slide-nav {
+  display:flex; justify-content:space-between; align-items:center; margin-top:30px;
+  padding-top:20px; border-top:1px solid #BFE0C8;
+}
+.slide-btn {
+  background:#E4F3E8; border:1px solid #BFE0C8; color:#2F7D4F;
+  padding:10px 20px; border-radius:8px; cursor:pointer; font-weight:600;
+  transition:all .2s;
+}
+.slide-btn:hover { background:#4CAF6D; color:#fff; }
+.slide-counter { color:#3E6B4F; font-size:14px; font-weight:600; }
+/* ----- ЗДЕСЬ КОНЧАЕТСЯ ЧАСТЬ 1, НЕ СОХРАНЯЙ ФАЙЛ ----- */
+/* ЦЕНЫ / ПАКЕТЫ */
+.pricing-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(260px,1fr)); gap:20px; margin-top:24px; }
+.price-card { background:#FFFFFF; border:1px solid #BFE0C8; border-radius:16px; padding:24px; box-shadow:0 8px 24px rgba(27,94,59,0.08); text-align:center; }
+.price-card h3 { color:#2F7D4F; font-size:18px; margin-bottom:8px; }
+.price-card .price { font-size:26px; font-weight:bold; color:#1B5E3B; margin:12px 0; }
+.price-card p { font-size:13px; color:#33523F; line-height:1.5; }
+/* ПРОЦЕСС */
+.process-steps { display:flex; flex-wrap:wrap; gap:16px; margin-top:20px; }
+.step { flex:1; min-width:160px; background:#FFFFFF; border:1px solid #BFE0C8; border-radius:12px; padding:18px; text-align:center; }
+.step .num { display:inline-block; width:32px; height:32px; line-height:32px; border-radius:50%; background:#4CAF6D; color:#fff; font-weight:bold; margin-bottom:10px; }
+.step h4 { color:#2F7D4F; font-size:15px; margin-bottom:6px; }
+.step p { font-size:12px; color:#33523F; }
+/* МАГНИТ / CTA */
+.cta-banner { background:linear-gradient(135deg,#4CAF6D,#7DC98F); border-radius:16px; padding:30px; text-align:center; margin:40px 0; color:#fff; }
+.cta-banner h3 { color:#fff; font-size:24px; margin-bottom:10px; }
+.cta-banner p { margin-bottom:16px; font-size:15px; }
+.magnet { display:inline-block; background:#fff; color:#1B5E3B; padding:14px 24px; border-radius:10px; font-weight:bold; font-size:15px; text-decoration:none; margin-top:8px; transition:transform .2s; }
+.magnet:hover { transform:translateY(-2px); box-shadow:0 8px 20px rgba(0,0,0,.2); }
+.cta-contacts { display:flex; gap:10px; flex-wrap:wrap; justify-content:center; margin-top:16px; }
+.cta-contacts a { background:#fff; color:#1B5E3B; padding:12px 20px; border-radius:10px; text-decoration:none; font-weight:bold; font-size:14px; }
+/* ПОДВАЛ */
+footer { margin-top:50px; text-align:center; font-size:13px; background:#1f2328; color:#fff; padding:30px 20px; border-radius:16px; }
+footer b { color:#fff; }
+@media (max-width:768px) {
+  .service-item { flex-direction:column; }
+  section h2 { font-size:22px; }
+}
+</style>
+</head>
+<body>
+
+<!-- ШАПКА С ФОТО -->
+<div class="hero-banner">
+  <div class="hero-veil"></div>
+  <div class="hero-photo"></div>
+  <div class="hero-content">
+    <h2>Смысловая упаковка коммерческих предложений</h2>
+  </div>
+</div>
+
+<!-- МЕНЮ НАВИГАЦИИ -->
+<div class="topbar">
+  <a href="index.html">← На главную</a>
+  <a href="smm.html">SMM</a>
+  <a href="video.html">Видео</a>
+  <a href="copywriting.html">Копирайтинг</a>
+  <a href="web.html">Веб и боты</a>
+  <a href="presentation.html">Презентации</a>
+  <a href="index.html#contacts">Контакты</a>
+</div>
+
+<div class="wrap">
+
+<header>
+<h1>Презентации</h1>
+<p class="sub">Не просто слайды — а логика убеждения, которая продаёт.</p>
+</header>
+
+<!-- УСЛУГИ С ИКОНКАМИ -->
+<section>
+<h2>Что я делаю в презентациях</h2>
+<div class="services-list">
+<div class="service-item">
+<div class="service-icon">🏗️</div>
+<div class="service-text">
+<h3>Структура КП</h3>
+<p>Выстраиваю логику слайдов так, чтобы клиент прошёл путь от «что это?» до «беру!» без сопротивления.</p>
+</div>
+</div>
+<div class="service-item">
+<div class="service-icon">✍️</div>
+<div class="service-text">
+<h3>Тексты слайдов</h3>
+<p>Пишу ёмкие, убедительные формулировки. Убираю воду, оставляю суть и выгоды для клиента.</p>
+</div>
+</div>
+<div class="service-item">
+<div class="service-icon">🎨</div>
+<div class="service-text">
+<h3>Визуальная концепция</h3>
+<p>Подбираю стиль, цвета, шрифты и референсы. Презентация выглядит дорого и соответствует бренду.</p>
+</div>
+</div>
+<div class="service-item">
+<div class="service-icon">🖥️</div>
+<div class="service-text">
+<h3>Дизайн и сборка</h3>
+<p>Верстаю слайды в PowerPoint/Keynote/Figma. Адаптирую под экран, проектор или PDF-рассылку.</p>
+</div>
+</div>
+</div>
+</section>
+
+<!-- ПРЕЗЕНТАЦИЯ (СЛАЙДЕР С ТВОИМИ ТЕКСТАМИ) -->
+<section>
+<h2>Пример готовой презентации</h2>
+<p class="lead">Комплексное кондиционирование ЖК «Северный парк». Листайте стрелками или клавишами ← →.</p>
+<div class="presentation-viewer">
+
+<div class="slide active">
+<h3>Слайд 1 · Титульный</h3>
+<p><strong>Презентация для управляющей компании</strong></p>
+<p>Комплексное кондиционирование ЖК «Северный парк»</p>
+<p>Единый проект климатической системы для квартала комфорт-класса: 12–16 этажей, закрытый двор без машин, панорамное остекление.</p>
+</div>
+
+<div class="slide">
+<h3>Слайд 2 · Проблема</h3>
+<p><strong>Хаотичная установка — беда фасада и УК</strong></p>
+<ul>
+<li>Блоки разных моделей висят где попало — фасад теряет вид уже через год после сдачи.</li>
+<li>Конденсат выведен прямо на стену: потёки, пятна, вода капает на окна соседей снизу.</li>
+<li>Десятки разных подрядчиков — нет единой ответственности за монтаж и обслуживание.</li>
+<li>Жалобы жителей, штрафы за порчу фасада, аварийные вызовы вместо плановой работы.</li>
+</ul>
+</div>
+
+<div class="slide">
+<h3>Слайд 3 · Решение</h3>
+<p><strong>Единый проект на этапе строительства</strong></p>
+<ul>
+<li>Кондиционирование закладывается в проект дома до сдачи, а не «докупается» жителями потом. Мы проектируем трассы, места под блоки и отвод конденсата заранее.</li>
+<li>Одна модель сплит-системы на весь квартал: оптовая закупка, унифицированный монтаж, единый ЗИП и простое плановое ТО.</li>
+</ul>
+</div>
+
+<div class="slide">
+<h3>Слайд 4 · Внешний блок</h3>
+<p><strong>Техническая корзина в цвет фасада</strong></p>
+<ul>
+<li>Наружный блок скрыт в архитектурной корзине с жалюзийной решёткой — фасад остаётся чистым и сохраняет архитектурный облик.</li>
+<li>Корзина гасит шум компрессора — тихая работа даже ночью под окнами жилых комнат.</li>
+<li>Защита от осадков и прямого солнца продлевает срок службы оборудования.</li>
+</ul>
+</div>
+
+<div class="slide">
+<h3>Слайд 5 · Внутренний блок</h3>
+<p><strong>На стене жилой комнаты, возле окна</strong></p>
+<ul>
+<li>Внутренний блок ставим рядом с окном — ближе к внешнему блоку. Трасса получается короткой: меньше трубы и кабеля, монтаж проще и надёжнее.</li>
+<li>Жалюзи блока направляют охлаждённый воздух вниз и вперёд, распределяя его по объёму комнаты. От блока сквозь стену уходит только межблочная трасса — никаких видимых коммуникаций в помещении.</li>
+</ul>
+</div>
+
+<div class="slide">
+<h3>Слайд 6 · Управление</h3>
+<p><strong>Пульт, как телевизор</strong></p>
+<ul>
+<li>Никаких умных панелей и лишней проводки по стенам. Температура, режим, скорость вентилятора, таймер — всё с обычного пульта ДУ.</li>
+<li>Два нажатия — и квартира живёт в своём климате. Привычно каждому жителю, обучать нечему, ломаться нечему.</li>
+</ul>
+</div>
+
+<div class="slide">
+<h3>Слайд 7 · Схема размещения</h3>
+<p><strong>Как идёт трасса от блока к блоку</strong></p>
+<ul>
+<li>Сквозь стену — только трубка в изоляции (рабочая жидкость) и силовой кабель. Отвод конденсата организован на стороне внешнего блока.</li>
+<li>Оранжевая линия — межблочная трасса сквозь стену: трубка в изоляции + кабель.</li>
+<li>Синяя линия — отвод конденсата с внешнего блока в общую систему здания.</li>
+<li>От внутреннего блока отвода конденсата нет — он уходит на стороне внешнего блока.</li>
+<li>Короткая трасса = меньше потерь, тише работа, проще обслуживание.</li>
+</ul>
+</div>
+
+<div class="slide">
+<h3>Слайд 8 · Сервис УК</h3>
+<p><strong>Одна точка ответственности</strong></p>
+<ul>
+<li>Плановое ТО по графику: чистка фильтров внутренних блоков, проверка внешних блоков и отвода конденсата.</li>
+<li>Единый подрядчик и единая модель оборудования — всегда есть ЗИП, мастер знает систему наизусть.</li>
+<li>Никаких стихийных установок жильцами: фасад под защитой, жалобы сведены к минимуму.</li>
+<li>Сервис кондиционирования — дополнительная статья дохода УК, а не головная боль.</li>
+</ul>
+</div>
+
+<div class="slide">
+<h3>Слайд 9 · Результат</h3>
+<p><strong>Целый фасад и спокойная УК</strong></p>
+<ul>
+<li>Фасад годами держит вид: единые корзины, нет потёков конденсата и «лоскутного одеяла» из блоков.</li>
+<li>Меньше жалоб жителей: тихие внешние блоки, ничего не капает на окна соседям.</li>
+<li>У УК — один подрядчик, плановое ТО и предсказуемые расходы вместо аварийных вызовов.</li>
+<li>Жители получают комфортный климат с пультом в руке, без ремонта и согласований.</li>
+</ul>
+</div>
+
+<div class="slide">
+<h3>Слайд 10 · Финал</h3>
+<p><strong>Обсудим внедрение для вашего объекта?</strong></p>
+<p>Презентация подготовлена Ярославом: структура, тексты слайдов, визуальное оформление и JS-навигация без библиотек. Нужна такая же упаковка инженерного решения для вашего ЖК или УК — напишите.</p>
+<p>maxkan77@yandex.ru · +7 915 573 83 82 (MAX / звонок)</p>
+</div>
+
+<div class="slide-nav">
+<button class="slide-btn" onclick="changeSlide(-1)">← Назад</button>
+<span class="slide-counter">Слайд <span id="current-slide">1</span> из 10</span>
+<button class="slide-btn" onclick="changeSlide(1)">Вперёд →</button>
+</div>
+</div>
+</section>
+
+<!-- КАК Я РАБОТАЮ -->
+<section>
+<h2>Как я работаю</h2>
+<div class="process-steps">
+<div class="step"><div class="num">1</div><h4>Бриф</h4><p>Разбираю задачу, ЦА, цель презентации и конкурентов</p></div>
+<div class="step"><div class="num">2</div><h4>Структура</h4><p>Собираю каркас слайдов и логику убеждения</p></div>
+<div class="step"><div class="num">3</div><h4>Тексты</h4><p>Пишу заголовки и буллеты через ИИ, но с человеческим смыслом</p></div>
+<div class="step"><div class="num">4</div><h4>Визуал</h4><p>Подбираю стиль и верстаю слайды</p></div>
+<div class="step"><div class="num">5</div><h4>Сборка</h4><p>Финальная проверка, экспорт в нужный формат</p></div>
+</div>
+</section>
+
+<!-- ЦЕНЫ -->
+<section>
+<h2>Пакеты и цены</h2>
+<div class="pricing-grid">
+<div class="price-card"><h3>Аудит презентации</h3><div class="price">5 000 ₽</div><p>Разбор текущих слайдов + письменные рекомендации по улучшению</p></div>
+<div class="price-card"><h3>Структура + тексты</h3><div class="price">от 15 000 ₽</div><p>Каркас слайдов и все тексты. Вы верстаете сами или отдаёте дизайнеру</p></div>
+<div class="price-card"><h3>Полная упаковка</h3><div class="price">от 30 000 ₽</div><p>Структура + тексты + дизайн + сборка. Готовый файл под ключ</p></div>
+</div>
+</section>
+
+<!-- МАГНИТ + КОНТАКТЫ -->
+<div class="cta-banner">
+<h3>Есть презентация, которая не продаёт?</h3>
+<p>Напишите — разберу вашу ситуацию и предложу решение. Использую AI для скорости, но каждый слайд выверяю вручную на логику и пользу для клиента.</p>
+<a href="mailto:maxkan77@yandex.ru?subject=Бесплатный аудит презентации" class="magnet">🎁 Бесплатный аудит презентации за 24 часа</a>
+<div class="cta-contacts">
+<a href="mailto:maxkan77@yandex.ru">✉️ maxkan77@yandex.ru</a>
+<a href="tel:+79155738382">📞 +7 915 573 83 82</a>
+<a href="https://max.ru/u/f9LHodD0cOLGK0MEDW7ckDw4dWKV1q6HHlltzT0qiLdaA0zezeURx_b2tKk" target="_blank">💬 Написать в MAX</a>
+</div>
+</div>
+
+<footer>
+<b>Нужна презентация под ваш бизнес?</b><br>
+maxkan77@yandex.ru · +7 915 573 83 82 (MAX / звонок)<br>
+© 2026 Ярослав · Презентации
+</footer>
+
+</div>
+
+<script>
+let currentSlide = 0;
+const slides = document.querySelectorAll('.slide');
+const counter = document.getElementById('current-slide');
+
+function changeSlide(direction) {
+  slides[currentSlide].classList.remove('active');
+  currentSlide = (currentSlide + direction + slides.length) % slides.length;
+  slides[currentSlide].classList.add('active');
+  counter.textContent = currentSlide + 1;
+}
+
+// Навигация клавишами
+document.addEventListener('keydown', function(e) {
+  if (e.key === 'ArrowLeft') changeSlide(-1);
+  if (e.key === 'ArrowRight') changeSlide(1);
+});
+</script>
+</body>
+</html>
