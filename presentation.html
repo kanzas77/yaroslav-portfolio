@@ -22,7 +22,7 @@ body::before {
   background-image:url("data:image/svg+xml,%3Csvg width='28' height='49' viewBox='0 0 28 49' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%232F7D4F' fill-opacity='0.08'%3E%3Cpath d='M13.99 9.25l13 7.5v15l-13 7.5L1 31.75v-15l12.99-7.5zM3 17.9v12.7l10.99 6.34 11-6.35V17.9l-11-6.34L3 17.9zM0 15l12.98-7.5V0h-2v6.35L0 12.69v2.3zm0 18.5L12.98 41v8h-2v-6.85L0 35.81v-2.3zM15 0v7.5L27.99 15H28v-2.31h-.01L17 6.35V0h-2zm0 49v-8l12.99-7.5H28v2.31h-.01L17 42.15V49h-2z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
   pointer-events:none;
 }
-.wrap { max-width:1000px; margin:0 auto; padding:0 20px; }
+.wrap { max-width:1100px; margin:0 auto; padding:0 20px; }
 
 /* ШАПКА С ФОТО */
 .hero-banner {
@@ -88,42 +88,40 @@ section p.lead { color:#3E6B4F; margin-bottom:30px; font-size:16px; }
 .service-text h3 { color:#2F7D4F; font-size:18px; margin-bottom:6px; }
 .service-text p { color:#33523F; font-size:14px; line-height:1.5; }
 
-/* ПРЕЗЕНТАЦИЯ (ФОТО + ТЕКСТ ПОВЕРХ) */
+/* ПРЕЗЕНТАЦИЯ (ТЕКСТ СЛЕВА + ФОТО СПРАВА) */
 .presentation-viewer {
   background:#FFFFFF; border:1px solid #BFE0C8; border-radius:16px;
-  padding:30px; box-shadow:0 8px 24px rgba(27,94,59,0.08);
-  text-align:center;
+  padding:40px; box-shadow:0 8px 24px rgba(27,94,59,0.08);
 }
-.slide-container {
-  position:relative; width:100%; max-width:800px; margin:0 auto;
-  aspect-ratio:16/9; background:#F7FBEA; border-radius:8px; overflow:hidden;
+.slide-layout {
+  display:flex; gap:40px; align-items:center;
 }
-.slide-img {
-  position:absolute; inset:0; width:100%; height:100%; object-fit:contain;
-  display:none; /* Скрываем все фото по умолчанию */
+.slide-text { flex:1; min-width:300px; }
+.slide-text .slide-label {
+  color:#4CAF6D; font-weight:bold; font-size:14px; text-transform:uppercase; letter-spacing:1px; margin-bottom:10px;
 }
-.slide-img.active { display:block; } /* Показываем активное фото */
+.slide-text h3 { color:#1B5E3B; font-size:26px; margin-bottom:20px; line-height:1.3; }
+.slide-text ul { margin:0; padding-left:24px; color:#33523F; }
+.slide-text li { margin-bottom:12px; }
+.slide-text p { margin-bottom:12px; color:#33523F; }
 
-/* Текст поверх слайда (полупрозрачная плашка) */
-.slide-overlay {
-  position:absolute; bottom:0; left:0; right:0;
-  background:rgba(255,255,255,0.92); backdrop-filter:blur(4px);
-  padding:20px; text-align:left;
-  border-top:1px solid #BFE0C8;
+.slide-image { flex:1; min-width:300px; }
+.slide-image img {
+  width:100%; border-radius:12px; border:1px solid #BFE0C8;
+  box-shadow:0 8px 24px rgba(27,94,59,0.1); object-fit:cover; aspect-ratio:16/10;
 }
-.slide-overlay h3 { color:#1B5E3B; font-size:18px; margin-bottom:8px; }
-.slide-overlay p { color:#33523F; font-size:14px; line-height:1.5; margin:0; }
 
 .slide-nav {
-  display:flex; justify-content:center; gap:10px; margin-top:20px;
+  display:flex; justify-content:center; align-items:center; gap:20px; margin-top:40px;
+  padding-top:20px; border-top:1px solid #BFE0C8;
 }
 .slide-btn {
   background:#E4F3E8; border:1px solid #BFE0C8; color:#2F7D4F;
-  padding:10px 20px; border-radius:8px; cursor:pointer; font-weight:600;
+  padding:12px 24px; border-radius:8px; cursor:pointer; font-weight:600;
   transition:all .2s;
 }
 .slide-btn:hover { background:#4CAF6D; color:#fff; }
-.slide-counter { color:#3E6B4F; font-size:14px; font-weight:600; align-self:center; }
+.slide-counter { color:#3E6B4F; font-size:16px; font-weight:600; }
 
 /* ЦЕНЫ / ПАКЕТЫ */
 .pricing-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(260px,1fr)); gap:20px; margin-top:24px; }
@@ -152,7 +150,8 @@ section p.lead { color:#3E6B4F; margin-bottom:30px; font-size:16px; }
 footer { margin-top:50px; text-align:center; font-size:13px; background:#1f2328; color:#fff; padding:30px 20px; border-radius:16px; }
 footer b { color:#fff; }
 
-@media (max-width:768px) {
+@media (max-width:900px) {
+  .slide-layout { flex-direction:column-reverse; } /* На мобильном фото сверху, текст снизу */
   .service-item { flex-direction:column; }
   section h2 { font-size:22px; }
 }
@@ -222,103 +221,186 @@ footer b { color:#fff; }
 </div>
 </section>
 
-<!-- ПРЕЗЕНТАЦИЯ (ФОТО + ТЕКСТ) -->
+<!-- ПРЕЗЕНТАЦИЯ (ТЕКСТ СЛЕВА + ФОТО СПРАВА) -->
 <section>
 <h2>Пример готовой презентации</h2>
 <p class="lead">Комплексное кондиционирование ЖК «Северный парк». Листайте стрелками или клавишами ← →.</p>
 <div class="presentation-viewer">
-<div class="slide-container">
 
 <!-- Слайд 1 -->
-<div class="slide-img active">
-<img src="pres-slide-1.jpg" alt="Слайд 1" style="width:100%;height:100%;object-fit:contain;">
-<div class="slide-overlay">
-<h3>Слайд 1 · Титульный</h3>
-<p><strong>Презентация для управляющей компании</strong><br>Комплексное кондиционирование ЖК «Северный парк»<br>Единый проект климатической системы для квартала комфорт-класса.</p>
+<div class="slide active">
+<div class="slide-layout">
+<div class="slide-text">
+<div class="slide-label">Слайд 1 · Титульный</div>
+<h3>Презентация для управляющей компании</h3>
+<p><strong>Комплексное кондиционирование ЖК «Северный парк»</strong></p>
+<p>Единый проект климатической системы для квартала комфорт-класса: 12–16 этажей, закрытый двор без машин, панорамное остекление.</p>
+</div>
+<div class="slide-image">
+<img src="pres-slide-1.jpg" alt="Титульный слайд">
+</div>
 </div>
 </div>
 
 <!-- Слайд 2 -->
-<div class="slide-img">
-<img src="pres-slide-2.jpg" alt="Слайд 2" style="width:100%;height:100%;object-fit:contain;">
-<div class="slide-overlay">
-<h3>Слайд 2 · Проблема</h3>
-<p><strong>Хаотичная установка — беда фасада и УК</strong><br>Блоки висят где попало, конденсат на стенах, десятки подрядчиков. Жалобы жителей и штрафы за порчу фасада.</p>
+<div class="slide" style="display:none;">
+<div class="slide-layout">
+<div class="slide-text">
+<div class="slide-label">Слайд 2 · Проблема</div>
+<h3>Хаотичная установка — беда фасада и УК</h3>
+<ul>
+<li>Блоки разных моделей висят где попало — фасад теряет вид уже через год после сдачи.</li>
+<li>Конденсат выведен прямо на стену: потёки, пятна, вода капает на окна соседей снизу.</li>
+<li>Десятки разных подрядчиков — нет единой ответственности за монтаж и обслуживание.</li>
+<li>Жалобы жителей, штрафы за порчу фасада, аварийные вызовы вместо плановой работы.</li>
+</ul>
+</div>
+<div class="slide-image">
+<img src="pres-slide-2.jpg" alt="Проблема">
+</div>
 </div>
 </div>
 
 <!-- Слайд 3 -->
-<div class="slide-img">
-<img src="pres-slide-3.jpg" alt="Слайд 3" style="width:100%;height:100%;object-fit:contain;">
-<div class="slide-overlay">
-<h3>Слайд 3 · Решение</h3>
-<p><strong>Единый проект на этапе строительства</strong><br>Кондиционирование закладывается в проект дома заранее. Одна модель сплит-системы на весь квартал.</p>
+<div class="slide" style="display:none;">
+<div class="slide-layout">
+<div class="slide-text">
+<div class="slide-label">Слайд 3 · Решение</div>
+<h3>Единый проект на этапе строительства</h3>
+<ul>
+<li>Кондиционирование закладывается в проект дома до сдачи, а не «докупается» жителями потом. Мы проектируем трассы, места под блоки и отвод конденсата заранее.</li>
+<li>Одна модель сплит-системы на весь квартал: оптовая закупка, унифицированный монтаж, единый ЗИП и простое плановое ТО.</li>
+</ul>
+</div>
+<div class="slide-image">
+<img src="pres-slide-3.jpg" alt="Решение">
+</div>
 </div>
 </div>
 
 <!-- Слайд 4 -->
-<div class="slide-img">
-<img src="pres-slide-4.jpg" alt="Слайд 4" style="width:100%;height:100%;object-fit:contain;">
-<div class="slide-overlay">
-<h3>Слайд 4 · Внешний блок</h3>
-<p><strong>Техническая корзина в цвет фасада</strong><br>Наружный блок скрыт в архитектурной корзине. Фасад остаётся чистым, работа тихая.</p>
+<div class="slide" style="display:none;">
+<div class="slide-layout">
+<div class="slide-text">
+<div class="slide-label">Слайд 4 · Внешний блок</div>
+<h3>Техническая корзина в цвет фасада</h3>
+<ul>
+<li>Наружный блок скрыт в архитектурной корзине с жалюзийной решёткой — фасад остаётся чистым и сохраняет архитектурный облик.</li>
+<li>Корзина гасит шум компрессора — тихая работа даже ночью под окнами жилых комнат.</li>
+<li>Защита от осадков и прямого солнца продлевает срок службы оборудования.</li>
+</ul>
+</div>
+<div class="slide-image">
+<img src="pres-slide-4.jpg" alt="Внешний блок">
+</div>
 </div>
 </div>
 
 <!-- Слайд 5 -->
-<div class="slide-img">
-<img src="pres-slide-5.jpg" alt="Слайд 5" style="width:100%;height:100%;object-fit:contain;">
-<div class="slide-overlay">
-<h3>Слайд 5 · Внутренний блок</h3>
-<p><strong>На стене жилой комнаты, возле окна</strong><br>Короткая трасса, надёжный монтаж. Никаких видимых коммуникаций в помещении.</p>
+<div class="slide" style="display:none;">
+<div class="slide-layout">
+<div class="slide-text">
+<div class="slide-label">Слайд 5 · Внутренний блок</div>
+<h3>На стене жилой комнаты, возле окна</h3>
+<ul>
+<li>Внутренний блок ставим рядом с окном — ближе к внешнему блоку. Трасса получается короткой: меньше трубы и кабеля, монтаж проще и надёжнее.</li>
+<li>Жалюзи блока направляют охлаждённый воздух вниз и вперёд, распределяя его по объёму комнаты. От блока сквозь стену уходит только межблочная трасса — никаких видимых коммуникаций в помещении.</li>
+</ul>
+</div>
+<div class="slide-image">
+<img src="pres-slide-5.jpg" alt="Внутренний блок">
+</div>
 </div>
 </div>
 
 <!-- Слайд 6 -->
-<div class="slide-img">
-<img src="pres-slide-6.jpg" alt="Слайд 6" style="width:100%;height:100%;object-fit:contain;">
-<div class="slide-overlay">
-<h3>Слайд 6 · Управление</h3>
-<p><strong>Пульт, как телевизор</strong><br>Никаких умных панелей. Два нажатия — и квартира живёт в своём климате.</p>
+<div class="slide" style="display:none;">
+<div class="slide-layout">
+<div class="slide-text">
+<div class="slide-label">Слайд 6 · Управление</div>
+<h3>Пульт, как телевизор</h3>
+<ul>
+<li>Никаких умных панелей и лишней проводки по стенам. Температура, режим, скорость вентилятора, таймер — всё с обычного пульта ДУ.</li>
+<li>Два нажатия — и квартира живёт в своём климате. Привычно каждому жителю, обучать нечему, ломаться нечему.</li>
+</ul>
+</div>
+<div class="slide-image">
+<img src="pres-slide-6.jpg" alt="Управление">
+</div>
 </div>
 </div>
 
 <!-- Слайд 7 -->
-<div class="slide-img">
-<img src="pres-slide-7.jpg" alt="Слайд 7" style="width:100%;height:100%;object-fit:contain;">
-<div class="slide-overlay">
-<h3>Слайд 7 · Схема размещения</h3>
-<p><strong>Как идёт трасса от блока к блоку</strong><br>Сквозь стену — только трубка в изоляции и кабель. Отвод конденсата организован грамотно.</p>
+<div class="slide" style="display:none;">
+<div class="slide-layout">
+<div class="slide-text">
+<div class="slide-label">Слайд 7 · Схема размещения</div>
+<h3>Как идёт трасса от блока к блоку</h3>
+<ul>
+<li>Сквозь стену — только трубка в изоляции (рабочая жидкость) и силовой кабель. Отвод конденсата организован на стороне внешнего блока.</li>
+<li>Оранжевая линия — межблочная трасса сквозь стену: трубка в изоляции + кабель.</li>
+<li>Синяя линия — отвод конденсата с внешнего блока в общую систему здания.</li>
+<li>От внутреннего блока отвода конденсата нет — он уходит на стороне внешнего блока.</li>
+<li>Короткая трасса = меньше потерь, тише работа, проще обслуживание.</li>
+</ul>
+</div>
+<div class="slide-image">
+<img src="pres-slide-7.jpg" alt="Схема размещения">
+</div>
 </div>
 </div>
 
 <!-- Слайд 8 -->
-<div class="slide-img">
-<img src="pres-slide-8.jpg" alt="Слайд 8" style="width:100%;height:100%;object-fit:contain;">
-<div class="slide-overlay">
-<h3>Слайд 8 · Сервис УК</h3>
-<p><strong>Одна точка ответственности</strong><br>Плановое ТО, единый подрядчик, ЗИП всегда в наличии. Сервис — доход УК, а не головная боль.</p>
+<div class="slide" style="display:none;">
+<div class="slide-layout">
+<div class="slide-text">
+<div class="slide-label">Слайд 8 · Сервис УК</div>
+<h3>Одна точка ответственности</h3>
+<ul>
+<li>Плановое ТО по графику: чистка фильтров внутренних блоков, проверка внешних блоков и отвода конденсата.</li>
+<li>Единый подрядчик и единая модель оборудования — всегда есть ЗИП, мастер знает систему наизусть.</li>
+<li>Никаких стихийных установок жильцами: фасад под защитой, жалобы сведены к минимуму.</li>
+<li>Сервис кондиционирования — дополнительная статья дохода УК, а не головная боль.</li>
+</ul>
+</div>
+<div class="slide-image">
+<img src="pres-slide-8.jpg" alt="Сервис УК">
+</div>
 </div>
 </div>
 
 <!-- Слайд 9 -->
-<div class="slide-img">
-<img src="pres-slide-9.jpg" alt="Слайд 9" style="width:100%;height:100%;object-fit:contain;">
-<div class="slide-overlay">
-<h3>Слайд 9 · Результат</h3>
-<p><strong>Целый фасад и спокойная УК</strong><br>Фасад держит вид годами. Меньше жалоб, предсказуемые расходы, довольные жители.</p>
+<div class="slide" style="display:none;">
+<div class="slide-layout">
+<div class="slide-text">
+<div class="slide-label">Слайд 9 · Результат</div>
+<h3>Целый фасад и спокойная УК</h3>
+<ul>
+<li>Фасад годами держит вид: единые корзины, нет потёков конденсата и «лоскутного одеяла» из блоков.</li>
+<li>Меньше жалоб жителей: тихие внешние блоки, ничего не капает на окна соседям.</li>
+<li>У УК — один подрядчик, плановое ТО и предсказуемые расходы вместо аварийных вызовов.</li>
+<li>Жители получают комфортный климат с пультом в руке, без ремонта и согласований.</li>
+</ul>
+</div>
+<div class="slide-image">
+<img src="pres-slide-9.jpg" alt="Результат">
+</div>
 </div>
 </div>
 
 <!-- Слайд 10 -->
-<div class="slide-img">
-<img src="pres-slide-10.jpg" alt="Слайд 10" style="width:100%;height:100%;object-fit:contain;">
-<div class="slide-overlay">
-<h3>Слайд 10 · Финал</h3>
-<p><strong>Обсудим внедрение для вашего объекта?</strong><br>Презентация подготовлена Ярославом. Нужна такая же упаковка — напишите.<br>maxkan77@yandex.ru · +7 915 573 83 82</p>
+<div class="slide" style="display:none;">
+<div class="slide-layout">
+<div class="slide-text">
+<div class="slide-label">Слайд 10 · Финал</div>
+<h3>Обсудим внедрение для вашего объекта?</h3>
+<p>Презентация подготовлена Ярославом: структура, тексты слайдов, визуальное оформление и JS-навигация без библиотек. Нужна такая же упаковка инженерного решения для вашего ЖК или УК — напишите.</p>
+<p>maxkan77@yandex.ru · +7 915 573 83 82 (MAX / звонок)</p>
+</div>
+<div class="slide-image">
+<img src="pres-slide-10.jpg" alt="Финал">
 </div>
 </div>
-
 </div>
 
 <div class="slide-nav">
@@ -373,13 +455,13 @@ maxkan77@yandex.ru · +7 915 573 83 82 (MAX / звонок)<br>
 
 <script>
 let currentSlide = 0;
-const slides = document.querySelectorAll('.slide-img');
+const slides = document.querySelectorAll('.slide');
 const counter = document.getElementById('current-slide');
 
 function changeSlide(direction) {
-  slides[currentSlide].classList.remove('active');
+  slides[currentSlide].style.display = 'none';
   currentSlide = (currentSlide + direction + slides.length) % slides.length;
-  slides[currentSlide].classList.add('active');
+  slides[currentSlide].style.display = 'block';
   counter.textContent = currentSlide + 1;
 }
 
