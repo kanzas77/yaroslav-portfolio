@@ -23,8 +23,9 @@ a.back { display:inline-block; margin-top:20px; color:#4CAF6D; text-decoration:n
 
 /* ШАПКА С РАЗМЫТИЕМ И СОТАМИ */
 .hero-banner {
-  position:relative; width:100%; height:340px; border-radius:20px; overflow:hidden;
-  margin-bottom:50px; display:flex; align-items:center; justify-content:center; background:#DDEBCC;
+    position:relative; width:100vw; left:50%; right:50%; margin-left:-50vw; margin-right:-50vw;
+    height:340px; border-radius:0; overflow:hidden;
+    margin-bottom:50px; display:flex; align-items:center; justify-content:center; background:#DDEBCC;
 }
 @media (min-width:1024px) { .hero-banner { height:420px; } }
 .hero-banner::before {
