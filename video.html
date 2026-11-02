@@ -89,7 +89,9 @@ video, img.cover {
 /* ТРАНСФОРМАЦИЯ ОБРАЗА */
 .transformation-grid {
   display:grid; grid-template-columns:1fr 2fr; gap:20px; align-items:start;
+  margin-bottom:40px; padding-bottom:40px; border-bottom:1px dashed #BFE0C8;
 }
+.transformation-grid:last-child { border-bottom:none; margin-bottom:0; padding-bottom:0; }
 .trans-main img { width:100%; border-radius:16px; border:2px solid #4CAF6D; box-shadow:0 8px 24px rgba(27,94,59,0.1); }
 .trans-results { display:grid; grid-template-columns:repeat(2, 1fr); gap:20px; }
 .trans-item {
@@ -177,10 +179,19 @@ footer b { color:#fff; }
 <section>
 <h2>Флагманские проекты</h2>
 <div class="gallery">
-<div class="item"><video controls preload="metadata"><source src="shary.mp4" type="video/mp4"></video><div class="desc"><h3>Шары</h3><p>AI-генерация праздничной анимации</p></div></div>
-<div class="item"><video controls preload="metadata"><source src="lukomorye.mp4" type="video/mp4"></video><div class="desc"><h3>Лукоморье</h3><p>Сказочная AI-визуализация</p></div></div>
-<div class="item"><video controls preload="metadata"><source src="dolphins.mp4" type="video/mp4"></video><div class="desc"><h3>Дельфины</h3><p>Динамичная морская сцена</p></div></div>
 <div class="item"><video controls preload="metadata"><source src="paris-live.mp4" type="video/mp4"></video><div class="desc"><h3>Париж Live</h3><p>Оживление статичного фото</p></div></div>
+<div class="item"><video controls preload="metadata"><source src="beach-live.mp4" type="video/mp4"></video><div class="desc"><h3>Пляж Live</h3><p>Продолжение истории из Парижа</p></div></div>
+<div class="item"><video controls preload="metadata"><source src="dolphins.mp4" type="video/mp4"></video><div class="desc"><h3>Дельфины</h3><p>Динамичная морская сцена</p></div></div>
+</div>
+</section>
+
+<!-- ТВОРЧЕСТВО / МОИ КЛИПЫ -->
+<section>
+<h2>Творчество / Мои клипы</h2>
+<p class="lead">Авторские работы, созданные с нуля: генерация, монтаж и идея.</p>
+<div class="gallery">
+<div class="item"><video controls preload="metadata"><source src="shary.mp4" type="video/mp4"></video><div class="desc"><h3>Киборг / Шары</h3><p>AI-генерация праздничной анимации</p></div></div>
+<div class="item" style="max-width:300px;"><video controls preload="metadata" style="aspect-ratio:9/16;"><source src="reel-2.mp4" type="video/mp4"></video><div class="desc"><h3>Вертикальный клип</h3><p>Адаптация под Reels / Shorts</p></div></div>
 </div>
 </section>
 
@@ -188,17 +199,31 @@ footer b { color:#fff; }
 <section>
 <h2>Кейс: Трансформация образа</h2>
 <p class="lead">Из одного исходного фото созданы видео и новые ракурсы с помощью AI.</p>
+
+<!-- Кейс 1 -->
 <div class="transformation-grid">
 <div class="trans-main">
 <img src="trans-source.jpg" alt="Исходное фото">
-<div class="trans-label" style="margin-top:10px; border-radius:8px;">ИСХОДНИК</div>
+<div class="trans-label" style="margin-top:10px; border-radius:8px;">ИСХОДНИК 1</div>
 </div>
 <div class="trans-results">
 <div class="trans-item"><video controls preload="metadata"><source src="trans-video.mp4" type="video/mp4"></video><div class="trans-label">Видео: Девушка смеется</div></div>
-<div class="trans-item"><img src="trans-photo-1.jpg" alt="На набережной"><div class="trans-label">Фото: На набережной</div></div>
 <div class="trans-item"><img src="trans-photo-2.jpg" alt="Сидит в парке"><div class="trans-label">Фото: Сидит в парке</div></div>
 </div>
 </div>
+
+<!-- Кейс 2 -->
+<div class="transformation-grid">
+<div class="trans-main">
+<img src="ai-client-before.jpg" alt="Исходное фото клиента">
+<div class="trans-label" style="margin-top:10px; border-radius:8px;">ИСХОДНИК 2 (Клиент)</div>
+</div>
+<div class="trans-results">
+<div class="trans-item"><video controls preload="metadata"><source src="client-transform.mp4" type="video/mp4"></video><div class="trans-label">Видео: На пляже</div></div>
+<div class="trans-item"><img src="ai-client-after.jpg" alt="Результат на пляже"><div class="trans-label">Фото: Результат</div></div>
+</div>
+</div>
+
 </section>
 
 <!-- ПРЕДМЕТНАЯ СЪЕМКА -->
@@ -217,15 +242,6 @@ footer b { color:#fff; }
 <div class="item"><video controls preload="metadata"><source src="borscht.mp4" type="video/mp4"></video><div class="desc"><h3>Борщ</h3><p>Фуд-контент с AI-эффектами</p></div></div>
 <div class="item"><video controls preload="metadata"><source src="bears.mp4" type="video/mp4"></video><div class="desc"><h3>Медведи</h3><p>Юмористическая AI-сценка</p></div></div>
 <div class="item"><video controls preload="metadata"><source src="ip-opened.mp4" type="video/mp4"></video><div class="desc"><h3>Рекламный ролик: ИП открыто</h3><p>Видео для бизнеса и соцсетей</p></div></div>
-</div>
-</section>
-
-<!-- ВЕРТИКАЛЬНЫЕ ВИДЕО (REELS) -->
-<section>
-<h2>Вертикальный контент (Reels / Shorts)</h2>
-<p class="lead">Адаптация под мобильные форматы: TikTok, VK Клипы, Instagram Reels.</p>
-<div class="reels-grid">
-<div class="reel-item"><video controls preload="metadata"><source src="reel-2.mp4" type="video/mp4"></video></div>
 </div>
 </section>
 
