@@ -104,15 +104,6 @@ video, img.cover {
   background:#F7FBEA; border-top:1px solid #BFE0C8;
 }
 
-/* ВЕРТИКАЛЬНЫЕ ВИДЕО (REELS) */
-.reels-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(200px,1fr)); gap:20px; justify-items:center; }
-.reel-item {
-  background:#FFFFFF; border-radius:16px; overflow:hidden;
-  border:1px solid #BFE0C8; box-shadow:0 8px 24px rgba(27,94,59,0.08);
-  width:100%; max-width:280px;
-}
-.reel-item video { width:100%; height:auto; display:block; aspect-ratio:9/16; object-fit:cover; background:#000; }
-
 /* ПРОЦЕСС */
 .process-steps { display:flex; flex-wrap:wrap; gap:16px; margin-top:20px; }
 .step { flex:1; min-width:160px; background:#FFFFFF; border:1px solid #BFE0C8; border-radius:12px; padding:18px; text-align:center; }
@@ -190,7 +181,7 @@ footer b { color:#fff; }
 <h2>Творчество / Мои клипы</h2>
 <p class="lead">Авторские работы, созданные с нуля: генерация, монтаж и идея.</p>
 <div class="gallery">
-<div class="item"><video controls preload="metadata"><source src="shary.mp4" type="video/mp4"></video><div class="desc"><h3>Киборг / Шары</h3><p>AI-генерация праздничной анимации</p></div></div>
+<div class="item"><video controls preload="metadata"><source src="ai-fantasy.mp4" type="video/mp4"></video><div class="desc"><h3>Лукоморье</h3><p>Сказочная AI-визуализация</p></div></div>
 <div class="item" style="max-width:300px;"><video controls preload="metadata" style="aspect-ratio:9/16;"><source src="reel-2.mp4" type="video/mp4"></video><div class="desc"><h3>Вертикальный клип</h3><p>Адаптация под Reels / Shorts</p></div></div>
 </div>
 </section>
